@@ -1,7 +1,8 @@
 package database;
 import java.sql.*;
+import database.User;
 public class DatabaseManager {
-  private static final String DB_URL = "jdbc:squlite:app.db";
+  private static final String DB_URL = "jdbc:squlite:MainApp.db";
   private Connection connection;
   public DatabaseManager() {
     try{
@@ -15,7 +16,7 @@ public class DatabaseManager {
   public void close() throws SQLException {
     connection.close();
   }
-
+ // tables
   private void createTables(){
     try(Statement stmt = connection.createStatement()){
       String users =
@@ -25,7 +26,6 @@ public class DatabaseManager {
           user_name TEXT UNIQUE NOT NULL,
           user_password TEXT NOT NULL,
           is_admin INTEGER DEFAULT 0
-          created_at TEXT DEFAULT(datetime('now'))
           avatar_character TEXT DEFAULT 'chiikawa',
           theme TEXT DEFAULT 'pink'
           timer_duration INTEGER DEFAULT 25,
@@ -62,7 +62,23 @@ public class DatabaseManager {
       stmt.execute(tasks);
       stmt.execute(focus);
       } catch (SQLException e){
-        System.err.println("createTables failed: " + e.getMessage());
+        System.err.println("createTables failed: " + e.getMessage()); // error handling from scene factory leture slides
       }
+  }
+  //CRUD
+  public boolean insertUser(String username, String password) throws SQLException {
+    String sql = "INSERT INTO users (user)name, user_password) VALUES (?, ?)";
+    try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+      pstmt.setString(1, username);
+      pstmt.setString(2, password);
+      pstmt.executeUpdate();
+      return true;
+    } catch (SQLException e){
+      System.err.println("insertUser failed: " + e.getMessage());
+      return false;
+    }
+  }
+  public User getUser(String username, String password){
+
   }
 }
