@@ -78,7 +78,22 @@ public class DatabaseManager {
       return false;
     }
   }
-  public User getUser(String username, String password){
-
+  public User getUser(String username, String password) {
+    String sql = "SELECT * FROM users WHERE user_name = ? AND user_password = ?";
+    try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+      pstmt.setString(1, username);
+      pstmt.setString(2, password);
+      ResultSet rs = pstmt.executeQuery();
+      while(rs.next()) {
+        return new User (
+          rs.getInt("user_id"),
+          rs.getString("user_name"),
+          rs.getInt("is_admin") == 1
+        );
+      }
+    } catch (SQLException e) {
+      System.err.println("Get user credentials failed: " + e.getMessage());
+    }
+    return null;
   }
 }
