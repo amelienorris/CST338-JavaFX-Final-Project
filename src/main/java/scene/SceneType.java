@@ -1,5 +1,5 @@
 package scene;
 
 public enum SceneType {
-    WELCOME, LOGIN, SIGNUP
+    WELCOME, LOGIN, SIGNUP, WIDGETS, ADMIN
 }
