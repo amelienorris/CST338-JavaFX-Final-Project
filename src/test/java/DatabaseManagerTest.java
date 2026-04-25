@@ -6,15 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 public class DatabaseManagerTest {
   private DatabaseManager db;
-
-  public DatabaseManagerTest() throws SQLException {
-  }
-
   @BeforeEach
   void setUp(){
     db = DatabaseManager.getInstance();
   }
-
   @Test
       void testCreate(){
         String user = "chiikawa";
@@ -24,5 +19,10 @@ public class DatabaseManagerTest {
         User testuser = db.getUser(user, password);
         assertNotNull(testuser, "found from insertion");
   }
-
+  @Test
+    void testWrongPassword(){
+      db.insertUser("chii2", "chiifan123");
+      User user = db.getUser("chii2", "bleh");
+      assertNull(user);
+  }
 }
