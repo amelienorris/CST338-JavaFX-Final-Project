@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager {
-  private static final String DB_URL = "jdbc:squlite:MainApp.db";
+  private static final String DB_URL = "jdbc:sqlite:taskpals.db";
   private static DatabaseManager instance; // make an instance for singleton
   private Connection connection;
   private DatabaseManager() {
@@ -23,8 +23,13 @@ public class DatabaseManager {
     }
     return instance;
   }
-  public void close() throws SQLException {
-    connection.close();
+  public void close(){
+    try{
+      connection.close();
+    }catch (SQLException e){
+      System.err.println("Failed to close " + e.getMessage());
+    }
+
   }
  // tables
   private void createTables(){
@@ -35,28 +40,27 @@ public class DatabaseManager {
           user_id INTEGER PRIMARY KEY AUTOINCREMENT,
           user_name TEXT UNIQUE NOT NULL,
           user_password TEXT NOT NULL,
-          is_admin INTEGER DEFAULT 0
+          is_admin INTEGER DEFAULT 0,
           avatar_character TEXT DEFAULT 'chiikawa',
-          theme TEXT DEFAULT 'pink'
+          theme TEXT DEFAULT 'pink',
           timer_duration INTEGER DEFAULT 25,
           city TEXT,
           badges TEXT DEFAULT '[]',
           current_streak INTEGER DEFAULT 0,
-          longest_streak INEGER DEFAULT 0
+          longest_streak INTEGER DEFAULT 0
           )
           """;
       String tasks = """
           CREATE TABLE IF NOT EXISTS tasks(
           task_id INTEGER PRIMARY KEY AUTOINCREMENT,
-          user_id INTEGER NOT NULL
+          user_id INTEGER NOT NULL,
           title TEXT NOT NULL,
-          description TEXT
+          description TEXT,
           due_date TEXT,
-          priority TEXT DEFAULT 'MEDIUM'
+          priority TEXT DEFAULT 'MEDIUM',
           is_completed INTEGER DEFAULT 0,
           created_at TEXT DEFAULT (datetime('now')),
-          FOREIGN KEY (user_id) REFERENCES users(user_id)
-          
+          FOREIGN KEY (user_id) REFERENCES users(user_id))
           """;
       String focus = """
           CREATE TABLE IF NOT EXISTS focus_sessions(
@@ -67,7 +71,7 @@ public class DatabaseManager {
               completed INTEGER DEFAULT 0,
               session_date TEXT DEFAULT(datetime('now')),
               FOREIGN KEY (user_id) REFERENCES users(user_id),
-              FOREIGN KEY (task_id) REFERENCES tasks(task_id)
+              FOREIGN KEY (task_id) REFERENCES tasks(task_id))
           """;
       stmt.execute(users);
       stmt.execute(tasks);
@@ -77,8 +81,8 @@ public class DatabaseManager {
       }
   }
   //CRUD
-  public boolean insertUser(String username, String password) throws SQLException {
-    String sql = "INSERT INTO users (username, user_password) VALUES (?, ?)";
+  public boolean insertUser(String username, String password) {
+    String sql = "INSERT INTO users (user_name, user_password) VALUES (?, ?)";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setString(1, username);
       pstmt.setString(2, password);
@@ -108,7 +112,7 @@ public class DatabaseManager {
     return null;
   }
   public void updateUser(int userID, String avatar, String theme, int timer, String city){
-    String sql = "UPDATE users SET avatar_character = ?, theme = ?, timer_duration = ?, city = ? WHERE user_id ?";
+    String sql = "UPDATE users SET avatar_character = ?, theme = ?, timer_duration = ?, city = ? WHERE user_id = ?";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setString(1, avatar);
       pstmt.setString(2, theme);
@@ -121,7 +125,7 @@ public class DatabaseManager {
     }
   }
   public void deleteUser(int userId){
-    String sql = "DETELE FROM users WHERE id = ?";
+    String sql = "DELETE FROM users WHERE id = ?";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setInt(1, userId);
       pstmt.executeUpdate();
@@ -137,6 +141,7 @@ public class DatabaseManager {
       pstmt.setString(3, description);
       pstmt.setString(4, due);
       pstmt.setString(5, priority);
+      pstmt.executeUpdate();
     } catch (SQLException e){
       System.err.println("add task failed " + e.getMessage());
     }
@@ -165,7 +170,7 @@ public class DatabaseManager {
     }
   }
   public void deleteTask(int taskId){
-    String sql = "DELTE FROM tasks WHERE task_id = ?";
+    String sql = "DELETE FROM tasks WHERE task_id = ?";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setInt(1, taskId);
       pstmt.executeUpdate();
@@ -180,6 +185,7 @@ public class DatabaseManager {
       pstmt.setInt(2, taskId);
       pstmt.setInt(3, duration);
       pstmt.setInt(4, completed ? 1 : 0);
+      pstmt.executeUpdate();
     } catch (SQLException e){
       System.err.println("add task failed " + e.getMessage());
     }
