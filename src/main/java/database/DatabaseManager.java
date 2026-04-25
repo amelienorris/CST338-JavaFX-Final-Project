@@ -103,4 +103,26 @@ public class DatabaseManager {
     }
     return null;
   }
+  public void updateUser(int userID, String avatar, String theme, int timer, String city){
+    String sql = "UPDATE users SET avatar_character = ?, theme = ?, timer_duration = ?, city = ? WHERE user_id ?";
+    try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+      pstmt.setString(1, avatar);
+      pstmt.setString(2, theme);
+      pstmt.setInt(3, timer);
+      pstmt.setString(4, city);
+      pstmt.setInt(5, userID);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.err.println("update failed: " + e.getMessage());
+    }
+  }
+  public void deleteUser(int userId){
+    String sql = "DETELE FROM users WHERE id = ?";
+    try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+      pstmt.setInt(1, userId);
+      pstmt.executeUpdate();
+    } catch (SQLException e){
+      System.err.println("delete failed: " + e.getMessage());
+    }
+  }
 }
