@@ -74,7 +74,7 @@ public class DatabaseManager {
   }
   //CRUD
   public boolean insertUser(String username, String password) throws SQLException {
-    String sql = "INSERT INTO users (user)name, user_password) VALUES (?, ?)";
+    String sql = "INSERT INTO users (username, user_password) VALUES (?, ?)";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setString(1, username);
       pstmt.setString(2, password);
