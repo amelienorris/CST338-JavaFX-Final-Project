@@ -10,7 +10,7 @@ import java.util.Map;
 public class SceneManager {
     private static SceneManager instance;
     private final Stage stage;
-    private final Map<SceneType, Scene> cache = new EnumMap<>(SceneType.class); // scene caching, DAC_scene_manager.pptx,
+    private final Map<SceneType, Scene> cache = new EnumMap<>(SceneType.class);
 
     private SceneManager(Stage stage) {
         this.stage = stage;
@@ -30,7 +30,17 @@ public class SceneManager {
         return instance;
     }
     public void navigateTo(SceneType type){
-        Scene scene = cache.computeIfAbsent(type, SceneFactory::create);
+        Scene scene = cache.computeIfAbsent(type, x -> SceneFactory.create(x, stage));
         stage.setScene(scene);
     }
+
+    public void refresh(SceneType type){
+        cache.remove(type);
+        stage.setScene(SceneFactory.create(type, stage));
+    }
+
+    public void clearAllCache(){
+        cache.clear();
+    }
+
 }
