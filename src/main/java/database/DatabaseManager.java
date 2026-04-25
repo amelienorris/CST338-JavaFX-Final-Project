@@ -3,8 +3,9 @@ import java.sql.*;
 import database.User;
 public class DatabaseManager {
   private static final String DB_URL = "jdbc:squlite:MainApp.db";
+  private static DatabaseManager instance; // make an instance for singleton
   private Connection connection;
-  public DatabaseManager() {
+  private DatabaseManager() {
     try{
       connection = DriverManager.getConnection(DB_URL);
       System.out.println("Database connected");
@@ -12,6 +13,12 @@ public class DatabaseManager {
     } catch (SQLException e){
       System.err.println("Connection failed: " + e.getMessage());
     }
+  }
+  public static DatabaseManager getInstance(){
+    if (instance==null){
+      instance = new DatabaseManager();
+    }
+    return instance;
   }
   public void close() throws SQLException {
     connection.close();
