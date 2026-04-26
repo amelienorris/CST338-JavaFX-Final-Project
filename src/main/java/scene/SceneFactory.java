@@ -55,25 +55,4 @@ public class SceneFactory {
             throw new RuntimeException("failed to load " + path, o);
         }
     }
-
-    // used for scenes that need incoming data
-    private static <T> Scene loadSceneController(String path, Consumer<T> setup)  { // replaces manual controller loader/setup
-
-        URL url = SceneFactory.class.getResource(path);
-        if(url == null) {
-            throw new IllegalArgumentException("fxml not found " + path);
-        }
-        try{
-            FXMLLoader loader = new FXMLLoader(url);
-            Parent p = loader.load();
-            setup.accept(loader.getController()); // setItem() call
-            return new Scene(p);
-        } catch(IOException e){
-            throw new RuntimeException("FXML didn't load:" + path, e);
-        }
-
-        // > `loader.load()` → constructor → `@FXML` injection → `initialize()`
-        //> → `loader.getController()` → your `setItem()` call
-
-    }
 }

@@ -9,12 +9,12 @@ public class Main extends Application {
   private DatabaseManager db ;
   @Override
   public void start (Stage stage) {
-    DatabaseManager.getInstance();
+    db = new DatabaseManager () ; // opens / creates app.db
 
-    SceneManager.init(stage);
     stage.setTitle("Todo App");
+    SceneManager.init(stage, db);
     SceneManager.getInstance().navigateTo(SceneType.WELCOME);
-    stage.show();
+    stage.show () ;
 
   }
   @Override
