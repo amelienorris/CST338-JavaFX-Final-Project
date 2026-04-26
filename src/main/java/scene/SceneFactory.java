@@ -5,14 +5,13 @@ import database.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.function.Consumer;
 
 public class SceneFactory {
-    public static Scene create(SceneType type, Stage stage) {
+    public static Scene create(SceneType type) {
         return switch(type){
             case WELCOME -> loadScene("/fxml/welcome.fxml"); // FXML used for placeholder content and UI
             case LOGIN -> loadScene("/fxml/login.fxml");
@@ -23,7 +22,7 @@ public class SceneFactory {
 
     }
 
-    public static Scene loadUser(SceneType type, Stage stage, User user){
+    public static Scene loadUser(SceneType type, User user){
         return switch(type){
             case WIDGETS -> loadSceneController("/fxml/widgets.fxml",
                     (WidgetController c) -> c.setUser(user));       // loads data after log in
