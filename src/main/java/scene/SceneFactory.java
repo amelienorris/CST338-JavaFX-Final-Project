@@ -1,4 +1,5 @@
 package scene;
+import controller.*;
 
 import database.DatabaseManager;
 import database.User;
@@ -37,6 +38,8 @@ public class SceneFactory {
                     type + "no user data needed");  // if a scene does not need a user object, it should use create()
         };
     }
+
+    // TODO: CREATE GUEST FOR TESTING WITHOUT ADDING DATA
     private static Scene loadScene(String path){
         URL url = SceneFactory.class.getResource(path);
         if(url == null){
