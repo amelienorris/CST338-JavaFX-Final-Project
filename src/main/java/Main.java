@@ -19,6 +19,6 @@ public class Main extends Application {
   }
   @Override
   public void stop () throws SQLException {
-    if ( db != null ) db.close() ; // called automatically on window close
-  } // framework for SQLite database implementation with scenemanger, to be implemented fully after we work on scenefactory
+    DatabaseManager.getInstance().close();
+  }
 }
