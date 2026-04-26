@@ -26,6 +26,11 @@ public class DatabaseManagerTest {
       assertNull(user);
   }
   @Test
+    void testExistingUser(){
+    boolean existing = db.insertUser("chii2", "skadjhfs");
+    assertFalse(existing);
+  }
+  @Test
     void testDelete(){
     db.insertUser("chii4", "woo");
     User deletetest = db.getUser("chii4", "woo");
