@@ -6,13 +6,12 @@ import scene.SceneManager;
 import scene.SceneType;
 
 public class Main extends Application {
-  private DatabaseManager db ;
   @Override
   public void start (Stage stage) {
-    db = new DatabaseManager () ; // opens / creates app.db
+    DatabaseManager.getInstance();// opens / creates app.db
 
     stage.setTitle("Todo App");
-    SceneManager.init(stage, db);
+    SceneManager.init(stage);
     SceneManager.getInstance().navigateTo(SceneType.WELCOME);
     stage.show () ;
 
