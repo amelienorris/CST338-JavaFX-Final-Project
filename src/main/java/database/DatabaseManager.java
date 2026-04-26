@@ -125,7 +125,7 @@ public class DatabaseManager {
     }
   }
   public void deleteUser(int userId){
-    String sql = "DELETE FROM users WHERE id = ?";
+    String sql = "DELETE FROM users WHERE user_id = ?";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setInt(1, userId);
       pstmt.executeUpdate();
