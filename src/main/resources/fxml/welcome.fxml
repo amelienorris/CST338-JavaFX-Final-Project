@@ -21,7 +21,7 @@
     <Label fx:id="subtitleLabel"
            text="hi"/>
 
-    <Button text="Sign In" onAction="#handleSignIn"/>
-    <Button text="Sign Up" onAction="#handleSignUp"/>
-    <Button text="Guest" onAction="#handleGuestMode"/>
+    <Button fx:id="signInButton" text="Sign In" onAction="#handleSignIn"/>
+    <Button fx:id="signUpButton" text="Sign Up" onAction="#handleSignUp"/>
+    <Button fx:id="guestButton" text="Guest" onAction="#handleGuestMode"/>
 </VBox>
