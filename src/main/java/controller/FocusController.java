@@ -42,6 +42,13 @@ public class FocusController {
     @FXML
     private void endTimer() {
         timer.stop();
-        timerLabel.setText("Ended");
+        timer = new FocusTimer(25);
+        timerLabel.setText(timer.getFormattedTime());
+        timer.setOnTick(() -> {
+            timerLabel.setText(timer.getFormattedTime());
+        });
+        timer.setOnFinish(() -> {
+            timerLabel.setText("Done!");
+        });
     }
 }

@@ -18,16 +18,23 @@ public class FocusTimerTest {
     }
 
     @Test
-    public void testOneMinute() {
-        FocusTimer timer = new FocusTimer(1);
-        assertEquals(60, timer.getSecondsLeft());
-        assertEquals("01:00", timer.getFormattedTime());
+    public void testUserCanChooseTenMinutes() {
+        FocusTimer timer = new FocusTimer(10);
+        assertEquals(600, timer.getSecondsLeft());
+        assertEquals("10:00", timer.getFormattedTime());
     }
 
     @Test
-    public void testZeroTime() {
-        FocusTimer timer = new FocusTimer(0);
-        assertEquals(0, timer.getSecondsLeft());
-        assertEquals("00:00", timer.getFormattedTime());
+    public void testUserCanChooseFiveMinutes() {
+        FocusTimer timer = new FocusTimer(5);
+        assertEquals(300, timer.getSecondsLeft());
+        assertEquals("05:00", timer.getFormattedTime());
+    }
+
+    @Test
+    public void testUserCanChooseThirtyMinutes() {
+        FocusTimer timer = new FocusTimer(30);
+        assertEquals(1800, timer.getSecondsLeft());
+        assertEquals("30:00", timer.getFormattedTime());
     }
 }
