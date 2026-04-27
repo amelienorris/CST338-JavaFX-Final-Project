@@ -39,7 +39,7 @@ public class SignUpController {
 
   private void showAlert(String message) {
     Alert alert =  new Alert(Alert.AlertType.WARNING);
-    alert.setTitle("Task List");
+    alert.setTitle("Signup");
     alert.setHeaderText(null);
     alert.setContentText(message);
     alert.showAndWait();
