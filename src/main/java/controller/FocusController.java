@@ -13,7 +13,7 @@ public class FocusController {
     private Button pauseButton;
     @FXML
     private Button endButton;
-    //takes from FocusTimer
+    //takes from FocusTimer.
     private FocusTimer timer;
 
     @FXML

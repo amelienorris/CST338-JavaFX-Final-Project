@@ -9,7 +9,7 @@ public class FocusTimer {
     private int secondsLeft;
     //what is timeline?
     //timeline is a varaible used in java, and it makes the clock function
-    //i used this as it keeps the clock ticking, it runs code for however long I tell it too in the varaible
+    //i used this as it keeps the clock ticking, it runs code for however long I tell it too in the varaible.
 
     private Timeline timeline;
     //runnable allows us to run code later

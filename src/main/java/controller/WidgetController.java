@@ -29,7 +29,7 @@ public class WidgetController {
         titleLabel.setText("hi " + user.getUsername());
     }
     @FXML
-    //controller timer stuff for starting it stopping and ending it
+    //controller timer stuff for starting it stopping and ending it.
     private void startTimer() {
         timer.start();
     }
