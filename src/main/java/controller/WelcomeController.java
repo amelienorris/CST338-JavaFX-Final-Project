@@ -24,4 +24,9 @@ public class WelcomeController {
     private void handleSignUp(){
         SceneManager.getInstance().navigateTo(SceneType.SIGNUP);
     }
+
+    @FXML
+    private void handleGuestMode(){
+        SceneManager.getInstance().navigateTo(SceneType.WIDGETS);
+    }
 }

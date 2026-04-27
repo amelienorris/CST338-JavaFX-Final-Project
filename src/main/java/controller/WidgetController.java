@@ -2,44 +2,29 @@ package controller;
 
 import database.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 public class WidgetController {
-    @FXML private Label titleLabel;
-    @FXML private Label timerLabel;
-    //making for the timer
+    @FXML private TaskListController taskController;
+//    @FXML private TimerController timerController;
+//    @FXML private MusicController musicController;
+//    @FXML private QuoteController quoteController;
+//    @FXML private WeatherController weatherController;
     private User user;
-    private FocusTimer timer;
 
-    @FXML
-    public void initialize() {
-        titleLabel.setText("Widgets");
-        timer = new FocusTimer(25);
-        timerLabel.setText(timer.getFormattedTime());
-        timer.setOnTick(() -> {
-            timerLabel.setText(timer.getFormattedTime());
-        });
-        //need to set finsih for timer
-        timer.setOnFinish(() -> {
-            timerLabel.setText("Done!");
-        });
+    public void initialize(){ // placeholders
+
     }
-    public void setUser(User user) {
+    public void setUser(User user){
         this.user = user;
-        titleLabel.setText("hi " + user.getUsername());
+        if(isGuest()) return;
+
+//        weatherController.setUser(user); // only that need user put data
+//        streakController.setUser(user);
+//        timerController.setUser(user);
+//        taskController.setUser(user);
     }
-    @FXML
-    //controller timer stuff for starting it stopping and ending it.
-    private void startTimer() {
-        timer.start();
-    }
-    @FXML
-    private void pauseTimer() {
-        timer.pause();
-    }
-    @FXML
-    private void endTimer() {
-        timer.stop();
-        timerLabel.setText("Ended");
+
+    private boolean isGuest(){
+        return user == null || user.getUserId() == -1;
     }
 }

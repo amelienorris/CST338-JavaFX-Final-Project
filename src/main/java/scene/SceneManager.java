@@ -1,6 +1,6 @@
 package scene;
 
-import database.DatabaseManager;
+import database.User;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -17,7 +17,7 @@ public class SceneManager {
 
     }
 
-    public static void init(Stage stage, DatabaseManager db) {
+    public static void init(Stage stage) {
         if(instance == null) {
             instance = new SceneManager(stage);
         }
@@ -29,14 +29,19 @@ public class SceneManager {
         }
         return instance;
     }
-    public void navigateTo(SceneType type){
-        Scene scene = cache.computeIfAbsent(type, x -> SceneFactory.create(x, stage));
+    public void navigateTo(SceneType type){ // no user needed navigation
+        Scene scene = cache.computeIfAbsent(type, SceneFactory::create);
         stage.setScene(scene);
+    }
+
+    public void navigateToUser (SceneType type, User user){ // logged in users, TODO: constantly asked for new data
+        cache.remove(type);
+        stage.setScene(SceneFactory.loadUser(type, user));
     }
 
     public void refresh(SceneType type){
         cache.remove(type);
-        stage.setScene(SceneFactory.create(type, stage));
+        stage.setScene(SceneFactory.create(type));
     }
 
     public void clearAllCache(){
