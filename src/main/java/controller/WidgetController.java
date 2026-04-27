@@ -13,6 +13,7 @@ public class WidgetController {
     private User user;
 
     public void initialize(){ // placeholders
+
     }
     public void setUser(User user){
         this.user = user;
