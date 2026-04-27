@@ -6,18 +6,19 @@ import scene.SceneManager;
 import scene.SceneType;
 
 public class Main extends Application {
+  private DatabaseManager db ;
   @Override
   public void start (Stage stage) {
-    DatabaseManager.getInstance();// opens / creates app.db
+    db = new DatabaseManager () ; // opens / creates app.db
 
     stage.setTitle("Todo App");
-    SceneManager.init(stage);
+    SceneManager.init(stage, db);
     SceneManager.getInstance().navigateTo(SceneType.WELCOME);
     stage.show () ;
 
   }
   @Override
   public void stop () throws SQLException {
-    DatabaseManager.getInstance().close();
-  }
+    if ( db != null ) db.close() ; // called automatically on window close
+  } // framework for SQLite database implementation with scenemanger, to be implemented fully after we work on scenefactory
 }
