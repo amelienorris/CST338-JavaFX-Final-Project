@@ -8,7 +8,7 @@ import scene.SceneType;
 public class Main extends Application {
   @Override
   public void start (Stage stage) {
-    DatabaseManager.getInstance();// opens / creates app.db
+    db = DatabaseManager.getInstance(); // opens / creates app.db
 
     stage.setTitle("Todo App");
     SceneManager.init(stage);
