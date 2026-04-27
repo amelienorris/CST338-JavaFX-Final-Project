@@ -5,18 +5,26 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class WidgetController {
-    @FXML private Label titleLabel;
-
+    @FXML private TaskListController taskController;
+//    @FXML private TimerController timerController;
+//    @FXML private MusicController musicController;
+//    @FXML private QuoteController quoteController;
+//    @FXML private WeatherController weatherController;
     private User user;
 
-    @FXML
-    public void initialize(){
-        titleLabel.setText("Widgets");
+    public void initialize(){ // placeholders
+    }
+    public void setUser(User user){
+        this.user = user;
+        if(isGuest()) return;
+
+//        weatherController.setUser(user); // only that need user put data
+//        streakController.setUser(user);
+//        timerController.setUser(user);
+        taskController.setUser(user);
     }
 
-
-    public void setUser(User user) {
-        this.user = user;
-        titleLabel.setText("hi" + user.getUsername());
+    private boolean isGuest(){
+        return user == null || user.getUserId() == -1;
     }
 }

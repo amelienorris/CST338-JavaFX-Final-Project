@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<GridPane hgap="12" vgap="12"
+          xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="controller.WidgetController">
+
+    <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+
+    <fx:include fx:id="task" source="widgets/task-list.fxml"
+                GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50"/>
+        <ColumnConstraints percentWidth="50"/>
+    </columnConstraints>
+
+</GridPane>
