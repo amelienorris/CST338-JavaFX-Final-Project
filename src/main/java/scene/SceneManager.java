@@ -48,4 +48,7 @@ public class SceneManager {
         cache.clear();
     }
 
+    public static void resetTests() {
+        instance = null;
+    }
 }
