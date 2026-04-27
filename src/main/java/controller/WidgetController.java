@@ -2,7 +2,6 @@ package controller;
 
 import database.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 public class WidgetController {
     @FXML private TaskListController taskController;
@@ -22,7 +21,7 @@ public class WidgetController {
 //        weatherController.setUser(user); // only that need user put data
 //        streakController.setUser(user);
 //        timerController.setUser(user);
-        taskController.setUser(user);
+//        taskController.setUser(user);
     }
 
     private boolean isGuest(){

@@ -9,10 +9,10 @@
 
     <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
 
-    <fx:include fx:id="task" source="widgets/task-list.fxml"
+    <fx:include fx:id="task" source="task-list.fxml"
                 GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-<!--    <fx:include fx:id="timer" source="widgets/timer.fxml"-->
-<!--                GridPane.columnIndex="0" GridPane.rowIndex="1"/>-->
+    <fx:include fx:id="timer" source="timer.fxml"
+                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
     <columnConstraints>
         <ColumnConstraints percentWidth="50"/>
