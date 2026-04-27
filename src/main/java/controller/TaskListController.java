@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.time.format.DateTimeFormatter;
 
+import java.time.LocalDate; //for testing
+
 public class TaskListController {
     //input filed for task title
     @FXML
@@ -102,10 +104,12 @@ public class TaskListController {
         String dueDate = "No due date";
 
         //formats date to be MM/dd/yyyy
-        if (dueDatePicker.getValue() != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-            dueDate = dueDatePicker.getValue().format(formatter);
-        }
+        //if (dueDatePicker.getValue() != null) {
+        //    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        //    dueDate = dueDatePicker.getValue().format(formatter);
+
+        dueDate = formatDueDate(dueDatePicker.getValue());
+        //}
 
         return title.trim()
                 + " | " + description.trim()
@@ -119,6 +123,17 @@ public class TaskListController {
         descriptionArea.clear();
         dueDatePicker.setValue(null);
         priorityBox.setValue(null);
+    }
+
+    //ADDED FOR TESTING
+    //formats using the device date into MM/DD/YYYY for due dates
+    public static String formatDueDate(LocalDate date) {
+        if (date == null) {
+            return "No due date";
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        return date.format(formatter);
     }
 
     //shows the warning pop ups
