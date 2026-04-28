@@ -50,7 +50,7 @@ public class FocusController {
         //reset at end
         timer.start();
     }
-
+//test
     @FXML
     private void pauseTimer() {
         timer.pause();
