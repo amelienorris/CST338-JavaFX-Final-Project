@@ -3,6 +3,8 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+//for textbox
+import javafx.scene.control.TextField;
 
 public class FocusController {
     @FXML
@@ -15,6 +17,8 @@ public class FocusController {
     private Button endButton;
     //takes from FocusTimer.
     private FocusTimer timer;
+    @FXML
+    private TextField minutesField;
 
     @FXML
     public void initialize() {
@@ -31,6 +35,19 @@ public class FocusController {
 
     @FXML
     private void startTimer() {
+        //get text for the time
+        int minutes = Integer.parseInt(minutesField.getText());
+        //for stopping
+        timer.stop();
+        timer = new FocusTimer(minutes);
+        timerLabel.setText(timer.getFormattedTime());
+        timer.setOnTick(() -> {
+            timerLabel.setText(timer.getFormattedTime());
+        });
+        timer.setOnFinish(() -> {
+            timerLabel.setText("Done!");
+        });
+        //reset at end
         timer.start();
     }
 
