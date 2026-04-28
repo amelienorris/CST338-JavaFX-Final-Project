@@ -23,4 +23,5 @@
 
     <Button text="Sign In" onAction="#handleSignIn"/>
     <Button text="Sign Up" onAction="#handleSignUp"/>
+    <Button text="Guest" onAction="#handleGuestMode"/>
 </VBox>

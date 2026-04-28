@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns = "http://javafx.com/javafx"
+            xmlns:fx = "http://javafx.com/fxml"
+            fx:controller = "controller.TaskListController">
+
+    <center>
+        <VBox spacing="12">
+            <padding>
+                <Insets top = "20" right = "20" bottom = "20" left = "20" />
+            </padding>
+
+            <Label text = "Task List" style = "-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <TextField fx:id="titleField" promptText="Task name" />
+            <TextArea fx:id="descriptionArea"
+                      promptText="Task Description"
+                      prefRowCount="4" />
+
+            <DatePicker fx:id="dueDatePicker" />
+
+            <ComboBox fx:id = "priorityBox" promptText="Priority" />
+
+            <HBox spacing="10" >
+                <Button text="Add Task" onAction="#handleAddTask" />
+                <Button text="Edit Task" onAction="#handleEditTask" />
+                <Button text="Delete Task" onAction="#handleDeleteTask" />
+            </HBox>
+
+            <ListView fx:id = "taskListView" prefHeight="300" />
+        </VBox>
+    </center>
+</BorderPane>
