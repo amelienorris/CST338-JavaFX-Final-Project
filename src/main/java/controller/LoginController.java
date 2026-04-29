@@ -29,5 +29,13 @@ public class LoginController {
       SceneManager.getInstance().navigateTo(SceneType.WIDGETS);
     }
   }
+  @FXML
+  private void handleBacktoSignup(){
+    SceneManager.getInstance().navigateTo(SceneType.SIGNUP);
+  }
+  @FXML
+  private void handleForgotPW(){
+    SceneManager.getInstance().navigateTo(SceneType.FORGOTPW);
+  }
 
 }

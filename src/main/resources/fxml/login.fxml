@@ -12,6 +12,6 @@
   <PasswordField fx:id="passwordField" promptText="Password" />
   <Label fx:id="error" style = "-fx-text-fill: red;"/>
   <Button text = "Log in" onAction="#Login"/>
-  <!--  <Button text = "Need to sign up?" onAction="#handleBacktoSignup"/>-->
-  <!--  <Button text = "Forgot Password" onAction="#handleForgotPW"/>-->
+  <Button text = "Need to sign up?" onAction="#handleBacktoSignup"/>
+  <Button text = "Forgot Password" onAction="#handleForgotPW"/>
 </VBox>

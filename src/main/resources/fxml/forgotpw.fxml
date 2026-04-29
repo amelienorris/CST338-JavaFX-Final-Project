@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox spacing="16"
+  alignment="CENTER"
+  xmlns="http://javafx.com/javafx/21"
+  xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="controller.WelcomeController">
+
+  <padding>
+    <Insets top="30" right="30" bottom="30" left="30"/>
+  </padding>
+
+  <Label text="Forgot Password?"
+    style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+  <TextField fx:id="usernameField" promptText="Username" />
+  <PasswordField fx:id="passwordField" promptText="New password" />
+  <PasswordField fx:id="confirmPassword" promptText="Confirm new password" />
+  <Button fx:id="confirmButton" text="Confirm" onAction="#handlePWChange"/>
+</VBox>

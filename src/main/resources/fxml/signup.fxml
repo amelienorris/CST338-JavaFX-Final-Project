@@ -13,6 +13,6 @@
   <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" />
   <Label fx:id="error" style = "-fx-text-fill: red;"/>
   <Button text = "Sign Up" onAction="#Signup"/>
-<!--  <Button text = "Back to Login" onAction="#handleBacktoLogin"/>-->
+  <Button text = "Back to Login" onAction="#handleBacktoLogin"/>
 
 </VBox>

@@ -38,6 +38,9 @@ public class SignUpController {
       usernameField.clear();
     }
   }
+  private void handleBacktoLogin(){
+    SceneManager.getInstance().navigateTo(SceneType.LOGIN);
+  }
 
   private void showAlert(String message) {
     Alert alert =  new Alert(Alert.AlertType.WARNING);
