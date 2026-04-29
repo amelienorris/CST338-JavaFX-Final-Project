@@ -3,6 +3,8 @@ import database.DatabaseManager;
 import database.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import scene.SceneManager;
+import scene.SceneType;
 
 
 public class LoginController {
@@ -23,6 +25,8 @@ public class LoginController {
       usernameField.clear();
       passwordField.clear();
       return;
+    } else {
+      SceneManager.getInstance().navigateTo(SceneType.WIDGETS);
     }
   }
 

@@ -3,6 +3,8 @@ import database.DatabaseManager;
 import database.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import scene.SceneManager;
+import scene.SceneType;
 
 
 public class SignUpController {
@@ -30,7 +32,7 @@ public class SignUpController {
     boolean signup = false;
     if(db.insertUser(user, pw)){
       showAlert("Account created! Please log in!");
-      // nav back to login page
+      SceneManager.getInstance().navigateTo(SceneType.LOGIN);
     } else {
       error.setText("Username is already taken.");
       usernameField.clear();
