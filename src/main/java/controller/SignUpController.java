@@ -38,6 +38,7 @@ public class SignUpController {
       usernameField.clear();
     }
   }
+  @FXML
   private void handleBacktoLogin(){
     SceneManager.getInstance().navigateTo(SceneType.LOGIN);
   }

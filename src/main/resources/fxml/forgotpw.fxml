@@ -11,7 +11,7 @@
   alignment="CENTER"
   xmlns="http://javafx.com/javafx/21"
   xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="controller.WelcomeController">
+  fx:controller="controller.ForgotPasswordController">
 
   <padding>
     <Insets top="30" right="30" bottom="30" left="30"/>

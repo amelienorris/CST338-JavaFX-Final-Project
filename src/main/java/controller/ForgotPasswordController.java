@@ -14,12 +14,14 @@ public class ForgotPasswordController {
   @FXML
   private PasswordField confirmPassword;
   @FXML
-  public void handlePWChange(){
+  public void handlePWChange(){ // disclaimer: in a real app we would collect phone/email to verify the user, but for now this is just for the sake of the feature
     DatabaseManager db = DatabaseManager.getInstance();
-    if(passwordField.equals(confirmPassword)){ // make sure entered passwords match
+    if(confirmPassword.getText().equals(passwordField.getText())){ // make sure entered passwords match
       String username = usernameField.getText();
       String password = passwordField.getText();
       db.changePW(username, password);
+      showAlert("Success! Please login using your new password.");
+      SceneManager.getInstance().navigateTo(SceneType.LOGIN);
     } else {
       showAlert("Passwords do not match!");
     }
