@@ -17,6 +17,7 @@ public class SceneFactory {
             case LOGIN -> loadScene("/fxml/login.fxml");
             case SIGNUP -> loadScene("/fxml/signup.fxml");
             case WIDGETS -> loadScene("/fxml/widgets.fxml"); // initialze placeholder content
+            case FORGOTPW -> loadScene("/fxml/forgotpw.fxml");
             case ADMIN -> throw new IllegalStateException("Admin requires login"); // blocking admin creation, needs login first
         };
 
