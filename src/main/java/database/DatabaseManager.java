@@ -111,6 +111,24 @@ public class DatabaseManager {
     }
     return null;
   }
+  public boolean changePW(String username, String newpw){
+    String sql = "SELECT * FROM users WHERE user_name = ?"; // check if user is valid
+    String update = "UPDATE users SET user_password = ? WHERE user_name = ?";
+    try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+      pstmt.setString(1, username);
+    } catch (SQLException e){
+      System.err.println("Find user failed: " + e.getMessage());
+    }
+    try (PreparedStatement pstmt2 = connection.prepareStatement(update)){
+      pstmt2.setString(1, newpw);
+      pstmt2.setString(2, username);
+      pstmt2.executeUpdate();
+      return true;
+    } catch (SQLException e){
+      System.err.println("Change password failed: " + e.getMessage());
+    }
+    return false;
+  }
   public void updateUser(int userID, String avatar, String theme, int timer, String city){
     String sql = "UPDATE users SET avatar_character = ?, theme = ?, timer_duration = ?, city = ? WHERE user_id = ?";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
