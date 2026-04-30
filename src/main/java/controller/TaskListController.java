@@ -31,7 +31,13 @@ public class TaskListController {
     @FXML
     private void initialize() {
         priorityBox.getItems().addAll("Low", "Medium", "High");
+
+        sortBox.getItems().addAll("Sort by Priotrity", "Sort by Due Date");
     }
+
+    //enables dropdown so users can decide how to sort tasks
+    @FXML
+    private ComboBox<String> sortBox;
 
     //adds new task to top of list
     @FXML
