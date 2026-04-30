@@ -1,5 +1,6 @@
 package controller;
 
+import database.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,5 +51,9 @@ public class FocusController {
         timer.setOnFinish(() -> {
             timerLabel.setText("Done!");
         });
+    }
+
+    public void setUser(User user) {
+
     }
 }
