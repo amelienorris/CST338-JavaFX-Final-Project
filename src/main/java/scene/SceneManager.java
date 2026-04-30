@@ -11,6 +11,7 @@ public class SceneManager {
     private static SceneManager instance;
     private final Stage stage;
     private final Map<SceneType, Scene> cache = new EnumMap<>(SceneType.class);
+    private User currentUser = User.guest();
 
     private SceneManager(Stage stage) {
         this.stage = stage;
@@ -29,6 +30,24 @@ public class SceneManager {
         }
         return instance;
     }
+
+    public void setCurrentUser(User user){
+        if(user == null){
+            currentUser = User.guest();
+        } else {
+            currentUser = user;
+        }
+        clearAllCache();
+    }
+
+    public User getCurrentUser(){
+        return currentUser;
+    }
+
+    public boolean isGuest(){
+        return currentUser == null || currentUser.getUserId() == -1;
+    }
+
     public void navigateTo(SceneType type){ // no user needed navigation
         Scene scene = cache.computeIfAbsent(type, SceneFactory::create);
         stage.setScene(scene);
