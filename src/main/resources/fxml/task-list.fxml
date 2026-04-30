@@ -24,6 +24,8 @@
 
             <ComboBox fx:id = "priorityBox" promptText="Priority" />
 
+            <ComboBox fx:id = "sortBox" promptText="Sort Tasks" />
+
             <HBox spacing="10" >
                 <Button text="Add Task" onAction="#handleAddTask" />
                 <Button text="Edit Task" onAction="#handleEditTask" />
