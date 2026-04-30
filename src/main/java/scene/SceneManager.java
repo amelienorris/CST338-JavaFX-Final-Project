@@ -48,14 +48,24 @@ public class SceneManager {
         return currentUser == null || currentUser.getUserId() == -1;
     }
 
-    public void navigateTo(SceneType type){ // no user needed navigation
-        Scene scene = cache.computeIfAbsent(type, SceneFactory::create);
+    public void navigateTo(SceneType type){
+        boolean pref = !isGuest() && switch(type){
+            case DASHBOARD, WIDGETS, FOCUS, PROFILE, ADMIN -> true; // scenes are personalized when user exist
+            default -> false;
+        };
+
+        Scene scene;
+        if(pref){
+            scene = SceneFactory.loadUser(type, currentUser);
+        } else {
+            scene = cache.computeIfAbsent(type, SceneFactory::create);
+        }
+        /// TODO: needs theme implementation applyTheme(scene)
+
         stage.setScene(scene);
     }
+    private void applyTheme(){
 
-    public void navigateToUser (SceneType type, User user){ // logged in users, TODO: constantly asked for new data
-        cache.remove(type);
-        stage.setScene(SceneFactory.loadUser(type, user));
     }
 
     public void refresh(SceneType type){
@@ -63,6 +73,10 @@ public class SceneManager {
         stage.setScene(SceneFactory.create(type));
     }
 
+    public void logout(){
+        setCurrentUser(User.guest());
+        navigateTo(SceneType.WELCOME);
+    }
     public void clearAllCache(){
         cache.clear();
     }
