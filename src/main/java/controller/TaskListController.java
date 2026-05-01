@@ -3,9 +3,11 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.time.format.DateTimeFormatter;
-
 import java.time.LocalDate; //for testing
 import java.util.Date;
+
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class TaskListController {
     //input filed for task title
@@ -34,6 +36,70 @@ public class TaskListController {
         priorityBox.getItems().addAll("Low", "Medium", "High");
 
         sortBox.getItems().addAll("Sort by Priority", "Sort by Due Date");
+
+        //bolds ti task title
+        boldTaskTitle();
+    }
+
+    //function will bold the task title onlty
+    private void boldTaskTitle() {
+        taskListView.setCellFactory(listView -> new ListCell<String>() {
+            @Override
+            //protected because im updating the task title to be bold, not changing what it says
+            protected void updateItem(String task_title, boolean empty) {
+                //calls the original task title
+                super.updateItem(task_title, empty);
+
+                //if there's no task clear the cell so old tasks dont show up
+                if (empty || task_title == null) {
+                    setText(null);
+                    setGraphic(null);
+                    return;
+                }
+
+                /*have to do this instead of bolding the title because it is a cell
+                * and ListView<String> displays the whole string as one whole item
+                * i needed a custom cell to just take a part of it need to have */
+
+                /*split the whole cell of task list, description, due date and priority
+                * split using the first | since the task title comes before the first one
+                * */
+                String[] task_parts = task_title.split("\\|", 2);
+
+                //gets the task title using index
+                String title = task_parts[0].trim();
+
+                //empty string incase there is no description or extra details
+                String remaining_task = "";
+
+                //keep the remaining text after the first | the same
+                if (task_parts.length > 1) {
+                    remaining_task = " | " + task_parts[1].trim();
+                }
+
+                //have to creat a new text object so the rest of the task remains not bold
+                Text bolded_title = new Text(title);
+
+                bolded_title.setStyle("-fx-font-weight: bold;");
+
+                //new object for the rest of the cell so they remain not bold
+                Text rest_task = new Text(remaining_task);
+
+                /*TextFlow allows muliple text obkects on the samel cell so we can have multiple items
+                allows the title to be bold while the rest stay default
+                */
+                TextFlow text_flow = new TextFlow(bolded_title, rest_task);
+
+                //clear the normal cell to display the boldes text
+                setText(null);
+
+                //diplays the bolded text
+                setGraphic(text_flow);
+
+
+
+            }
+        });
     }
 
     //enables dropdown so users can decide how to sort tasks
@@ -199,7 +265,7 @@ public class TaskListController {
             //gets the due date from the full task list
             String recorded_date = duedate.substring(begin_index, end_index).trim();
 
-            if (recorded_date.equals("No Due Date")) {
+            if (recorded_date.equals("No due date")) {
                 return null;
             }
 
