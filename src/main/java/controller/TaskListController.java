@@ -177,7 +177,7 @@ public class TaskListController {
     private LocalDate getduedateValue(String duedate) {
         try {
             //looks for the dur date in the app
-            String marker = "Due Date: ";
+            String marker = "Due: ";
             int begin_index = duedate.indexOf(marker);
 
             //if Due Date: not found, return null because no valid date
