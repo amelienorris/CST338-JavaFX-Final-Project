@@ -37,8 +37,60 @@ public class TaskListController {
 
         sortBox.getItems().addAll("Sort by Priority", "Sort by Due Date");
 
-        //bolds ti task title
+        //bolds task title
         boldTaskTitle();
+
+        //when user clicks the task all task information loaded back to input fields to be edited
+        taskListView.getSelectionModel().selectedItemProperty().addListener((task_list, old_task, new_task) -> {
+            //if new_task is not null user clicked on a task on the list
+            if (new_task != null) {
+                //load the details of the task back into the fields so they can edit it
+                load_task_in_fields(new_task);
+            }
+        });
+    }
+
+    private void load_task_in_fields(String task_words) {
+        //splits the parts into their category task title, task dewcription, date and priorty
+        String[] task_parts = task_words.split("\\|");
+
+        //loads the task title in ythe title field
+        if (task_parts.length > 0) {
+            titleField.setText(task_parts[0].trim());
+        }
+
+        //loads task description into the descritipn fields
+        if (task_parts.length > 1) {
+            descriptionArea.setText(task_parts[1].trim());
+        }
+
+        //loads the due date in due date field
+        if (task_parts.length > 2) {
+            String due_date = task_parts[2].replace("Due:", "").trim();
+
+            //if the original task did not have a due date, keep due date field clear
+            if (due_date.equals("No due date")) {
+                dueDatePicker.setValue(null);
+            }//if there is a date keep the format
+            else {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                LocalDate due_date_replace = LocalDate.parse(due_date, formatter);
+                dueDatePicker.setValue(due_date_replace);
+            }
+        }
+
+        //loads priority into back into the drop down
+        if (task_parts.length > 3) {
+            String priority_text = task_parts[3].replace("Priority:", "").trim();
+
+            //user can change or add priority here
+            if (priority_text.equals("No priority")) {
+                priorityBox.setValue(null);
+            }
+            else {
+                priorityBox.setValue(priority_text); //show the chosen priority
+            }
+        }
     }
 
     //function will bold the task title onlty
