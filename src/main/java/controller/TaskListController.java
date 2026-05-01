@@ -170,7 +170,7 @@ public class TaskListController {
 
         //add new task at index 0 so newest task appears first
         taskListView.getItems().add(0, taskText);
-        //clearFields();
+        clearFields();
     }
 
     //updates currently selected task
@@ -189,7 +189,7 @@ public class TaskListController {
         }
 
         taskListView.getItems().set(selectedIndex, taskText);
-        clearFields();
+        //clearFields();
     }
 
     //deletes cure ntly selected task
