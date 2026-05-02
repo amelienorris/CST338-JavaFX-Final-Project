@@ -443,14 +443,18 @@ public class TaskListController {
         //    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         //    dueDate = dueDatePicker.getValue().format(formatter);
 
-        dueDate = formatDueDate(dueDatePicker.getValue());
+        //dueDate = formatDueDate(dueDatePicker.getValue());
+        LocalDate selected_due_date = dueDatePicker.getValue();
+        dueDate = formatDueDate(selected_due_date);
+        String repeat_date = next_repeat_date(selected_due_date, repeat);
         //}
 
         return title.trim()
                 + " | " + description.trim()
                 + " | Due: " + dueDate
                 + " | Priority: " + priority
-                + " | Repeat: " + repeat;
+                + " | Repeat: " + repeat
+                + " | Next Repeat" + repeat_date;
     }
 
     //clears all in out fields after user adds, edit or deletes a task
@@ -471,6 +475,46 @@ public class TaskListController {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         return date.format(formatter);
+    }
+
+    private String next_repeat_date(LocalDate due_date, String repeat) {
+        //no due date means no repeat to calculate
+        if (due_date == null) {
+            return "No repeat date";
+        }
+
+        //if user did not choose to repeat task, dont calculate a date
+        if (repeat == null || repeat.equals("None")) {
+            return "Does not repeat";
+        }
+
+        LocalDate next_date;
+
+        //add date based on the repeat option selected by user
+        if (repeat.equals("Daily")) {
+            next_date = due_date.plusDays(1);
+        }
+        else if (repeat.equals("Weekly")) {
+            next_date = due_date.plusWeeks(1);
+        }
+
+        else if (repeat.equals("Bi-Weekly")) {
+            next_date = due_date.plusWeeks(2);
+        }
+
+        else if (repeat.equals("Monthly")) {
+            next_date = due_date.plusMonths(1);
+        }
+        else if (repeat.equals("Yearly")) {
+            next_date = due_date.plusYears(1);
+        }
+
+        else {
+            return "Does not repeat.";
+        }
+
+        //format date correctly
+        return formatDueDate(next_date);
     }
 
     //shows the warning popups
