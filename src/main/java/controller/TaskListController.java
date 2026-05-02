@@ -454,7 +454,7 @@ public class TaskListController {
                 + " | Due: " + dueDate
                 + " | Priority: " + priority
                 + " | Repeat: " + repeat
-                + " | Next Repeat" + repeat_date;
+                + " | Next Repeat " + repeat_date;
     }
 
     //clears all in out fields after user adds, edit or deletes a task
