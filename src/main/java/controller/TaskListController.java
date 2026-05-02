@@ -31,7 +31,7 @@ public class TaskListController {
     private Button saveChangesButton;
 
     //stores the task currently being edited
-    private int editing_task  = - 1; //-1 no task currently being edited
+    private int editing_task  = -1; //-1 no task currently being edited
 
     //displays list of tasks on screen
     @FXML
