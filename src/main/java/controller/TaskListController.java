@@ -155,9 +155,6 @@ public class TaskListController {
 
                 //diplays the bolded text
                 setGraphic(text_flow);
-
-
-
             }
         });
     }
@@ -243,6 +240,9 @@ public class TaskListController {
         //makes save changes button disappear after editing
         saveChangesButton.setVisible(false);
         saveChangesButton.setManaged(false);
+
+        //clears input fields after user saves their changes
+        clearFields();
 
     }
 
