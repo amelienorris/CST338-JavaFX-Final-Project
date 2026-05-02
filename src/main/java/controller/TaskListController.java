@@ -4,8 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate; //for testing
-import java.util.Date;
-
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
