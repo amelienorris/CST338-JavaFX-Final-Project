@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager {
-  private static final String DB_URL = "jdbc:sqlite:taskpals.db";
+
   private static DatabaseManager instance; // make an instance for singleton
   private Connection connection;
   private DatabaseManager() {
+    String DB_URL = System.getProperty("app.db.url","jdbc:sqlite:taskpals.db"); // moved into constructor due to runtime errors while testing, used System.getProperty to check if existing memory db is being used
     try{
       connection = DriverManager.getConnection(DB_URL);
       System.out.println("Database connected");
@@ -221,5 +222,11 @@ public class DatabaseManager {
       System.err.println("Failed to get tasks " + e.getMessage());
     }
     return total;
+  }
+  // handle singleton testing
+  public static void resetForTesting() {
+    if (instance != null)
+      instance.close();
+    instance = null;
   }
 }
