@@ -152,7 +152,7 @@ public class DatabaseManager {
       System.err.println("delete failed: " + e.getMessage());
     }
   }
-  public void insertTask(int userId, String title, String description, String due, String priority){
+  public int insertTask(int userId, String title, String description, String due, String priority){
     String sql = "INSERT INTO tasks(user_id, title, description, due_date, priority) VALUES (?,?,?,?,?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setInt(1, userId);
@@ -161,9 +161,14 @@ public class DatabaseManager {
       pstmt.setString(4, due);
       pstmt.setString(5, priority);
       pstmt.executeUpdate();
+      ResultSet rs = pstmt.getGeneratedKeys();
+      if(rs.next()){
+        return rs.getInt(1);
+      }
     } catch (SQLException e){
       System.err.println("add task failed " + e.getMessage());
     }
+    return -1; // did not successfully generate a task id
   }
   public List<String> getTasks(int userId){
     List<String> tasks = new ArrayList<>();
@@ -197,7 +202,7 @@ public class DatabaseManager {
       System.err.println("could not delete" + e.getMessage());
     }
   }
-  public void insertFocus(int userId, int taskId, int duration, boolean completed){
+  public boolean insertFocus(int userId, int taskId, int duration, boolean completed){ //change to boolean for testing
     String sql = "INSERT INTO focus_sessions(user_id, task_id, duration_minutes, completed) VALUES (?,?,?,?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setInt(1, userId);
@@ -205,9 +210,11 @@ public class DatabaseManager {
       pstmt.setInt(3, duration);
       pstmt.setInt(4, completed ? 1 : 0);
       pstmt.executeUpdate();
+      return true;
     } catch (SQLException e){
       System.err.println("add task failed " + e.getMessage());
     }
+    return false;
   }
   public int getSesssionCount(int userId){
     int total = 0;
@@ -222,6 +229,25 @@ public class DatabaseManager {
       System.err.println("Failed to get tasks " + e.getMessage());
     }
     return total;
+  }
+  public void deleteFocus(int sessionId){
+    String sql = "DELETE FROM focus_sessions WHERE session_id = ?";
+    try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+      pstmt.setInt(1, sessionId);
+      pstmt.executeUpdate();
+    } catch (SQLException e){
+      System.err.println("Failed to delete focus sesssion: " + e.getMessage());
+    }
+  }
+  public void updateFocus(int sessionId, boolean completed){
+    String sql = "UPDATE focus_sessions SET completed = ? WHERE session_id = ?";
+    try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+      pstmt.setInt(1, completed ? 1:0);
+      pstmt.setInt(2, sessionId);
+      pstmt.executeUpdate();
+    } catch (SQLException e){
+      System.err.println("Failed to update focus sesssion: " + e.getMessage());
+    }
   }
   // handle singleton testing
   public static void resetForTesting() {
