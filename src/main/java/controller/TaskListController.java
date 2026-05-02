@@ -24,6 +24,10 @@ public class TaskListController {
     @FXML
     private ComboBox<String> priorityBox;
 
+    //dropdown so users can choose repeat frequency for tasks
+    @FXML
+    private ComboBox<String> repeatBox;
+
     //displays save changes button for when users edit
     @FXML
     private Button saveChangesButton;
@@ -38,12 +42,17 @@ public class TaskListController {
     //lets users choose prioroty level fo task
     @FXML
     private void initialize() {
+        //shows priority level
         priorityBox.getItems().addAll("Low", "Medium", "High");
 
+        //gives user options on how to sort their priorities
         sortBox.getItems().addAll("Sort by Priority", "Sort by Due Date");
 
+        //gives the options to how often their task repeats
+        repeatBox.getItems().addAll("None", "Daily", "Weekly", "Bi-Weekly", "Monthly", "Yearly");
+
         //bolds task title
-        boldTaskTitle();
+        bold_task_title();
 
         //when user clicks the task all task information loaded back to input fields to be edited
         taskListView.getSelectionModel().selectedItemProperty().addListener((task_list, old_task, new_task) -> {
@@ -97,10 +106,23 @@ public class TaskListController {
                 priorityBox.setValue(priority_text); //show the chosen priority
             }
         }
+
+        //puts the chosen frewuncy back into the drop down option so they can chnage it later
+        if (task_parts.length > 4) {
+            String repeat_text = task_parts[4].replace("Repeat:", "").trim();
+
+            //if the repeat frequency is none, show none
+            if (repeat_text.equals("None")) {
+                repeatBox.setValue("None");
+            }
+            else {
+                repeatBox.setValue(repeat_text);
+            }
+        }
     }
 
     //function will bold the task title onlty
-    private void boldTaskTitle() {
+    private void bold_task_title() {
         taskListView.setCellFactory(listView -> new ListCell<String>() {
             @Override
             //protected because im updating the task title to be bold, not changing what it says
@@ -173,7 +195,7 @@ public class TaskListController {
 
         //add new task at index 0 so newest task appears first
         taskListView.getItems().add(0, task_text);
-        clearFields();
+        clear_fields();
     }
 
     //updates currently selected task
@@ -207,7 +229,7 @@ public class TaskListController {
         }
 
         taskListView.getItems().set(selected_index, task_text);
-        clearFields();*/
+        clear_fields();*/
     }
 
     //saves the edited task after user clicks saves changes
@@ -240,7 +262,7 @@ public class TaskListController {
         saveChangesButton.setManaged(false);
 
         //clears input fields after user saves their changes
-        clearFields();
+        clear_fields();
 
     }
 
@@ -255,7 +277,7 @@ public class TaskListController {
         }
 
         taskListView.getItems().remove(selected_index);
-        clearFields();
+        clear_fields();
     }
 
     //will sort task based on selected priority sorting option
@@ -271,17 +293,17 @@ public class TaskListController {
 
         //if user did select an option function call and sort the tasks
         if (selected_sort.equals("Sort by Priority")) {
-            sortbyPriority();
+            sort_by_priority();
         }
 
         //if user chose to sort task by due date call the function to sort bu due date
         if (selected_sort.equals("Sort by Due Date")) {
-            sortbyDueDate();
+            sort_by_due_date();
         }
     }
 
     //sort task by priory
-    private void sortbyPriority() {
+    private void sort_by_priority() {
         taskListView.getItems().sort((first_task, second_task) -> {
             //gets priority value for the first task
             int first_priority = getPriorityValue(first_task);
@@ -315,7 +337,7 @@ public class TaskListController {
     }
 
     //sorts tasks so that closest due date appears more
-    private void sortbyDueDate() {
+    private void sort_by_due_date() {
 
         taskListView.getItems().sort((task1, task2) -> {
             //gets due date of first task
@@ -399,13 +421,19 @@ public class TaskListController {
 
         String description = descriptionArea.getText();
         String priority = priorityBox.getValue();
+        String repeat = repeatBox.getValue();
 
         if (description == null || description.trim().isEmpty()) {
             description = "No description.";
         }
 
+
         if (priority == null) {
             priority = "No priority";
+        }
+
+        if (repeat == null) {
+            repeat = "None";
         }
 
         String dueDate = "No due date";
@@ -421,15 +449,17 @@ public class TaskListController {
         return title.trim()
                 + " | " + description.trim()
                 + " | Due: " + dueDate
-                + " | Priority: " + priority;
+                + " | Priority: " + priority
+                + " | Repeat: " + repeat;
     }
 
     //clears all in out fields after user adds, edit or deletes a task
-    private void clearFields() {
+    private void clear_fields() {
         titleField.clear();
         descriptionArea.clear();
         dueDatePicker.setValue(null);
         priorityBox.setValue(null);
+        repeatBox.setValue(null);
     }
 
     //ADDED FOR TESTING
