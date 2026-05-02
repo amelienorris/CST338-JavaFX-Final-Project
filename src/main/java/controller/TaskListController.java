@@ -26,6 +26,13 @@ public class TaskListController {
     @FXML
     private ComboBox<String> priorityBox;
 
+    //displays save changes button for when users edit
+    @FXML
+    private Button saveChangesButton;
+
+    //stores the task currently being edited
+    private int editing_task  = - 1; //-1 no task currently being edited
+
     //displays list of tasks on screen
     @FXML
     private ListView<String> taskListView;
@@ -50,8 +57,9 @@ public class TaskListController {
         });
     }
 
+    //loads the task back intp the input fields so they can be edited
     private void load_task_in_fields(String task_words) {
-        //splits the parts into their category task title, task dewcription, date and priorty
+        //splits the parts into their category task title, task description, date and priority
         String[] task_parts = task_words.split("\\|");
 
         //loads the task title in ythe title field
@@ -59,7 +67,7 @@ public class TaskListController {
             titleField.setText(task_parts[0].trim());
         }
 
-        //loads task description into the descritipn fields
+        //loads task description into the description fields
         if (task_parts.length > 1) {
             descriptionArea.setText(task_parts[1].trim());
         }
@@ -79,7 +87,7 @@ public class TaskListController {
             }
         }
 
-        //loads priority into back into the drop down
+        //loads priority into back into the dropdown
         if (task_parts.length > 3) {
             String priority_text = task_parts[3].replace("Priority:", "").trim();
 
@@ -161,69 +169,115 @@ public class TaskListController {
     //adds new task to top of list
     @FXML
     private void handleAddTask() {
-        String taskText = buildTaskText();
+        String task_text = buildTaskText();
 
-        //if buildTaskText returns null, validation faild lol
-        if (taskText == null) {
+        //if buildTaskText() returns null, validation faild lol
+        if (task_text == null) {
             return;
         }
 
         //add new task at index 0 so newest task appears first
-        taskListView.getItems().add(0, taskText);
+        taskListView.getItems().add(0, task_text);
         clearFields();
     }
 
     //updates currently selected task
     @FXML private void handleEditTask() {
-        int selectedIndex = taskListView.getSelectionModel().getSelectedIndex();
+        int selected_index = taskListView.getSelectionModel().getSelectedIndex();
 
-        if (selectedIndex == -1) {
+        if (selected_index == -1) {
             showAlert("Please select task to edit");
             return;
         }
 
-        String taskText = buildTaskText();
+        //stores task being edited
+        editing_task = selected_index;
 
-        if (taskText == null) {
+        //retrieve selected task from the list
+        String selected_task = taskListView.getItems().get(selected_index);
+
+        //load the selected task back to its proper field to be edited
+        load_task_in_fields(selected_task);
+
+        //show save changes button ONLY when user is editing
+        saveChangesButton.setVisible(true);
+        saveChangesButton.setManaged(true);
+
+        /*
+        commented out because since SaveChnages will now handle the saving of tasks
+        String task_text = buildTaskText();
+
+        if (task_text == null) {
             return;
         }
 
-        taskListView.getItems().set(selectedIndex, taskText);
-        //clearFields();
+        taskListView.getItems().set(selected_index, task_text);
+        clearFields();*/
+    }
+
+    //saves the edited task after user clicks saves changes
+    @FXML
+    private void handleSaveChanges() {
+        //checks that user clicks edit task first
+        if (editing_task == -1) {
+            showAlert("Please choose Edit Task before saving changes.");
+            return;
+        }
+
+        //puts updated task in the input field
+        String updated_task = buildTaskText();
+
+        if (updated_task == null) {
+            return;
+        }
+
+        //replace old task with the updated task
+        taskListView.getItems().set(editing_task, updated_task);
+
+        //keep edited task selected
+        taskListView.getSelectionModel().select(editing_task);
+
+        //stop editing
+        editing_task = -1;
+
+        //makes save changes button disappear after editing
+        saveChangesButton.setVisible(false);
+        saveChangesButton.setManaged(false);
+
     }
 
     //deletes cure ntly selected task
     @FXML
     private void handleDeleteTask() {
-        int selectedIndex = taskListView.getSelectionModel().getSelectedIndex();
+        int selected_index = taskListView.getSelectionModel().getSelectedIndex();
 
-        if (selectedIndex == -1) {
+        if (selected_index == -1) {
             showAlert("Please select a task to delete.");
             return;
         }
 
-        taskListView.getItems().remove(selectedIndex);
+        taskListView.getItems().remove(selected_index);
         clearFields();
     }
 
     //will sort task based on selected priority sorting option
     @FXML
     private void handleSortTasks() {
-        //gets the selcted option from the drop box
-        String selectedSort = sortBox.getValue();
+        //gets the selected option from the drop box
+        String selected_sort = sortBox.getValue();
 
         //if user did not choose sorting option, do nothing
-        if (selectedSort == null) {
+        if (selected_sort == null) {
             return;
         }
 
         //if user did select an option function call and sort the tasks
-        if (selectedSort.equals("Sort by Priority")) {
+        if (selected_sort.equals("Sort by Priority")) {
             sortbyPriority();
         }
 
         //if user chose to sort task by due date call the function to sort bu due date
-        if (selectedSort.equals("Sort by Due Date")) {
+        if (selected_sort.equals("Sort by Due Date")) {
             sortbyDueDate();
         }
     }
@@ -292,11 +346,11 @@ public class TaskListController {
         });
     }
 
-    private LocalDate getduedateValue(String duedate) {
+    private LocalDate getduedateValue(String due_date) {
         try {
             //looks for the dur date in the app
             String marker = "Due: ";
-            int begin_index = duedate.indexOf(marker);
+            int begin_index = due_date.indexOf(marker);
 
             //if Due Date: not found, return null because no valid date
             if (begin_index == -1) {
@@ -307,7 +361,7 @@ public class TaskListController {
             begin_index += marker.length();
 
             //find end of date right where priority section begins
-            int end_index = duedate.indexOf(" | Priority:", begin_index);
+            int end_index = due_date.indexOf(" | Priority:", begin_index);
 
             //if the priority labe is not fiunf retun null because wrong format
             if (end_index == -1) {
@@ -315,7 +369,7 @@ public class TaskListController {
             }
 
             //gets the due date from the full task list
-            String recorded_date = duedate.substring(begin_index, end_index).trim();
+            String recorded_date = due_date.substring(begin_index, end_index).trim();
 
             if (recorded_date.equals("No due date")) {
                 return null;
@@ -391,7 +445,7 @@ public class TaskListController {
         return date.format(formatter);
     }
 
-    //shows the warning pop ups
+    //shows the warning popups
     private void showAlert(String message) {
         Alert alert =  new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Task List");
