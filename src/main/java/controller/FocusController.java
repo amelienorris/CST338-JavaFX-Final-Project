@@ -1,5 +1,6 @@
 package controller;
 
+import database.DatabaseManager;
 import database.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class FocusController {
+    private final DatabaseManager db = DatabaseManager.getInstance();
+    private User currentUser = User.guest();
+
+
     @FXML
     private Label timerLabel;
     @FXML
@@ -24,6 +29,37 @@ public class FocusController {
     @FXML
     public void initialize() {
         timer = new FocusTimer(25);
+    }
+
+    public void setUser(User user){
+        this.currentUser = (user == null) ? User.guest(): user;
+
+        if(this.currentUser.isGuest()){
+            loadGuest();
+            return;
+        }
+
+        loadUser();
+    }
+
+    private void loadGuest(){
+        if(minutesField != null){
+            minutesField.setPromptText("Guest timer");
+        }
+    }
+
+    private void loadUser(){
+        if(minutesField != null){
+            minutesField.setPromptText("Timer for " + currentUser.getUsername());
+        }
+
+        // int userTime = db.getTimerDuration(user.getUserId());    // TODO: user preference
+        // createTimer(userTime); new method
+
+    }
+
+    public void createTimer(int min){ //
+        timer = new FocusTimer(min);
         timerLabel.setText(timer.getFormattedTime());
         timer.setOnTick(() -> {
             timerLabel.setText(timer.getFormattedTime());
@@ -31,8 +67,11 @@ public class FocusController {
 
         timer.setOnFinish(() -> {
             timerLabel.setText("Done!");
+
+            // todo: focus feature on on DatabaseManager?
         });
     }
+
 
     @FXML
     private void startTimer() {
@@ -54,12 +93,7 @@ public class FocusController {
             return;
         }
         timer.stop();
-        timer = new FocusTimer(minutes);
-
-        timer.setOnTick(() -> timerLabel.setText(timer.getFormattedTime()));
-        timer.setOnFinish(() -> timerLabel.setText("Done!"));
-
-        timerLabel.setText(timer.getFormattedTime());
+        createTimer(minutes);
         timer.start();
     }
 //test
@@ -71,17 +105,6 @@ public class FocusController {
     @FXML
     private void endTimer() {
         timer.stop();
-        timer = new FocusTimer(25);
-        timerLabel.setText(timer.getFormattedTime());
-        timer.setOnTick(() -> {
-            timerLabel.setText(timer.getFormattedTime());
-        });
-        timer.setOnFinish(() -> {
-            timerLabel.setText("Done!");
-        });
-    }
-
-    public void setUser(User user) {
-
+        createTimer(25);
     }
 }
