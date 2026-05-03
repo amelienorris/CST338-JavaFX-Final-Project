@@ -1,5 +1,7 @@
 package controller;
 
+import database.DatabaseManager;
+import database.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.time.format.DateTimeFormatter;
@@ -8,6 +10,33 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 public class TaskListController {
+    private final DatabaseManager db = DatabaseManager.getInstance();
+    private User user = User.guest();
+
+    public void setUser(User user){
+        this.user = (user == null) ? User.guest():user;
+        if(this.user.isGuest()){
+            loadGuest();
+            return;
+        }
+        loadUser();
+    }
+
+    private void loadUser() {
+        taskListView.getItems().setAll(db.getTasks(user.getUserId()));
+
+        if(taskListView.getItems().isEmpty()){
+            taskListView.getItems().add("No active tasks");
+        }
+    }
+
+    private void loadGuest() {
+        taskListView.getItems().clear();
+
+        taskListView.getItems().addAll("Sample task", "Guest tasks are temporary"
+        );
+    }
+
     //input filed for task title
     @FXML
     private TextField titleField;
@@ -193,9 +222,32 @@ public class TaskListController {
             return;
         }
 
-        //add new task at index 0 so newest task appears first
-        taskListView.getItems().add(0, task_text);
+        if(user.isGuest()){ // tasks only adding to ListView -> only tempory
+            //add new task at index 0 so newest task appears first
+            taskListView.getItems().add(0, task_text);
+            clear_fields();
+            return;
+        }
+
+        // task were previously only added to ListView, not the DB
+        // code below:  save to db
+        String title = titleField.getText().trim();
+        String description = descriptionArea.getText();
+
+        String due = "No due date";
+        if(dueDatePicker != null){
+            due = dueDatePicker.getValue().toString();
+        }
+
+        String priority = priorityBox.getValue();
+        if(priority == null){
+            priority = "MEDIUM";
+        }
+
+        db.insertTask(user.getUserId(), title, description, due, priority);
+        loadUser();
         clear_fields();
+
     }
 
     //updates currently selected task
