@@ -6,14 +6,10 @@ import scene.SceneManager;
 import scene.SceneType;
 
 public class WelcomeController {
-    @FXML
-    private Label subtitleLabel;
 
-//    @FXML
-//    public void initialize(){
-//        subtitleLabel.setText("hi");
-//
-//    }
+    @FXML
+    public void initialize(){
+    }
 
     @FXML
     private void handleSignIn(){
@@ -27,6 +23,6 @@ public class WelcomeController {
 
     @FXML
     private void handleGuestMode(){
-        SceneManager.getInstance().navigateTo(SceneType.WIDGETS);
+        SceneManager.getInstance().navigateTo(SceneType.DASHBOARD);
     }
 }

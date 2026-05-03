@@ -22,7 +22,11 @@ public class User {
     currentUser = null;
   } // handle theme changes & profile edits cleanly, acts as a cache
 
-  public int getUserId() {
+    public static User guest() {
+    return new User(-1, "Guest", false);
+    }
+
+    public int getUserId() {
     return userId;
   }
 
