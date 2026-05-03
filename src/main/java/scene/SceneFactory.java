@@ -11,41 +11,35 @@ import java.net.URL;
 import java.util.function.Consumer;
 
 public class SceneFactory {
-    public static Scene create(SceneType type) {
+    public static Scene create(SceneType type, User user){
+        User currentUser = (user == null) ? User.guest() : user;
+
         return switch(type){
-            case WELCOME -> loadScene("/fxml/welcome.fxml"); // FXML used for placeholder content and UI
+            case WELCOME -> loadScene("/fxml/welcome.fxml");
             case LOGIN -> loadScene("/fxml/login.fxml");
             case SIGNUP -> loadScene("/fxml/signup.fxml");
-            case DASHBOARD -> loadScene("/fxml/dashboard.fxml");
-            case WIDGETS -> loadScene("/fxml/widgets.fxml"); // initialze placeholder content
-            case FOCUS -> loadScene("/fxml/focus.fxml");
-            case PROFILE -> loadScene("/fxml/profile");
             case FORGOTPW -> loadScene("/fxml/forgotpw.fxml");
-            case ADMIN -> throw new IllegalStateException("Admin requires login"); // blocking admin creation, needs login first
-        };
 
-    }
-
-    public static Scene loadUser(SceneType type, User user){
-        return switch(type){
             case DASHBOARD -> loadSceneController("/fxml/dashboard.fxml",
-                    (DashboardController c) -> c.setUser(user));
+                    (DashboardController c) -> c.setUser(currentUser));
             case WIDGETS -> loadSceneController("/fxml/widgets.fxml",
-                    (WidgetController c) -> c.setUser(user));       // loads data after log in
+                    (WidgetController c) -> c.setUser(currentUser));
             case FOCUS -> loadSceneController("/fxml/focus.fxml",
-                    (FocusController c) -> c.setUser(user));
+                    (FocusController c) -> c.setUser(currentUser));
             case PROFILE -> loadSceneController("/fxml/profile.fxml",
-                    (ProfileController c) -> c.setUser(user));
-            case ADMIN -> { if (!user.isAdmin()) {
-                throw new SecurityException(("admin not initialized"));     // admin must come through the log in
+                    (ProfileController c) -> c.setUser(currentUser));
+            case ADMIN -> {
+                if(!currentUser.isAdmin()){
+                    throw new SecurityException("admin not logged in");
+                }
+                yield loadSceneController("/fxml/admin.fxml",
+                        (AdminController c) -> c.setUser(currentUser));
             }
-            yield    loadSceneController("/fxml/admin.fxml",
-                    (AdminController c) -> c.setUser(user));
-            }
-            default -> throw new IllegalArgumentException(
-                    type + "no user data needed");  // if a scene does not need a user object, it should use create()
+
+
         };
     }
+
     private static final double WIDTH = 800;
     private static final double HEIGHT = 600;
     // TODO: CREATE GUEST FOR TESTING WITHOUT ADDING DATA
