@@ -53,7 +53,7 @@ public class SceneManagerTransitionTest {
             assertNull(stage.getScene());
         });
     }
-
+//test
     @Test
     void fadeTransitionSceneCanHaveRootOpacityChanged() {
         VBox root = new VBox();
