@@ -20,13 +20,16 @@ public class LoginController {
     DatabaseManager db = DatabaseManager.getInstance();
     String user = usernameField.getText();
     String pw = passwordField.getText();
-    if(db.getUser(user, pw) == null){
+
+    User loggedIn = db.getUser(user, pw);
+
+    if(loggedIn == null){
       error.setText("Incorrect Login.");
       usernameField.clear();
       passwordField.clear();
       return;
     } else {
-      User.setCurrentUser(db.getUser(user, pw));
+      SceneManager.getInstance().setCurrentUser(loggedIn);
       SceneManager.getInstance().navigateTo(SceneType.DASHBOARD);
     }
   }
