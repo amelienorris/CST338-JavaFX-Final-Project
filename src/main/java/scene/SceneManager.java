@@ -65,7 +65,7 @@ public class SceneManager {
         stage.setScene(scene);
     }
     private void applyTheme(){
-
+        //TODO
     }
 
     public void refresh(SceneType type){

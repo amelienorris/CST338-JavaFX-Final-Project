@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="640.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.DashboardController">
+
+    <children>
+        <VBox spacing="20.0"
+              alignment="CENTER"
+              AnchorPane.topAnchor="0.0"
+              AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0">
+
+            <padding>
+                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+            </padding>
+
+            <children>
+                <Label fx:id="welcomeLabel" text="Welcome Guest"/>
+
+                <HBox spacing="20.0" alignment="CENTER">
+                    <children>
+<!--                        <StackPane prefWidth="180.0" prefHeight="180.0"> TODO needs implementation-->
+<!--                            <children>-->
+<!--                                <PieChart fx:id="completionChart"-->
+<!--                                          legendVisible="false"-->
+<!--                                          labelsVisible="false"-->
+<!--                                          prefWidth="160.0"-->
+<!--                                          prefHeight="160.0"/>-->
+<!--                            </children>-->
+<!--                        </StackPane>-->
+
+                        <VBox spacing="10.0" alignment="CENTER_LEFT" prefWidth="160.0">
+                            <children>
+                                <Label text="Today's Tasks"/>
+                                <ListView fx:id="taskPreviewList" prefWidth="160.0" prefHeight="140.0"/>
+                            </children>
+                        </VBox>
+
+<!--                        <VBox spacing="10.0" alignment="CENTER" prefWidth="160.0"> TODO needs implementation-->
+<!--                            <children>-->
+<!--                                <Label text="Task Calendar"/>-->
+<!--                                <DatePicker fx:id="calendarPicker"/>-->
+<!--                                <Label fx:id="calendarStatusLabel" text="Guest mode"/>-->
+<!--                            </children>-->
+<!--                        </VBox>-->
+                    </children>
+                </HBox>
+
+                <HBox spacing="12.0" alignment="CENTER">
+                    <children>
+                        <Button text="home" onAction="#handleHome"/>
+                        <Button text="widgets" onAction="#handleWidgets"/>
+                        <Button text="focus" onAction="#handleFocus"/>
+                        <Button text="profile" onAction="#handleProfile"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

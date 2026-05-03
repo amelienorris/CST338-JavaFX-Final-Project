@@ -23,6 +23,6 @@ public class WelcomeController {
 
     @FXML
     private void handleGuestMode(){
-        SceneManager.getInstance().navigateTo(SceneType.WIDGETS);
+        SceneManager.getInstance().navigateTo(SceneType.DASHBOARD);
     }
 }
