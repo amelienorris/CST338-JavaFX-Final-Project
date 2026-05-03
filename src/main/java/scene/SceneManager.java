@@ -33,7 +33,7 @@ public class SceneManager {
     }
 
     public void setCurrentUser(User user){
-        if(user == null){
+        if(user.isGuest()){
             currentUser = User.guest();
         } else {
             currentUser = user;
@@ -45,22 +45,16 @@ public class SceneManager {
         return currentUser;
     }
 
-    public boolean isGuest(){
-        return currentUser == null || currentUser.getUserId() == -1;
-    }
 
     public void navigateTo(SceneType type){
-        boolean pref = !isGuest() && switch(type){
+        boolean pref = !currentUser.isGuest() && switch(type){
             case DASHBOARD, WIDGETS, FOCUS, PROFILE, ADMIN -> true; // scenes are personalized when user exist
             default -> false;
         };
 
         Scene scene;
-        if(pref){
-            scene = SceneFactory.loadUser(type, currentUser);
-        } else {
-            scene = cache.computeIfAbsent(type, SceneFactory::create);
-        }
+        scene = SceneFactory.create(type, currentUser);
+
         /// TODO: needs theme implementation applyTheme(scene)
 
         stage.setScene(scene);
@@ -71,7 +65,7 @@ public class SceneManager {
 
     public void refresh(SceneType type){
         cache.remove(type);
-        stage.setScene(SceneFactory.create(type));
+        stage.setScene(SceneFactory.create(type, currentUser));
     }
 
     public void logout(){
