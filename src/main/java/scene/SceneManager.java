@@ -65,7 +65,7 @@ public class SceneManager {
 
     public void refresh(SceneType type){
         cache.remove(type);
-        stage.setScene(SceneFactory.create(type, currentUser));
+        navigateTo(type);
     }
 
     public void logout(){

@@ -39,7 +39,7 @@ public class User {
   }
 
   public boolean isGuest(){
-    return currentUser == null || currentUser.getUserId() == -1;
+    return userId == -1;
   }
 
   public String getTheme() {
