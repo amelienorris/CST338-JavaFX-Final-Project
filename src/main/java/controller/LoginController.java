@@ -27,7 +27,7 @@ public class LoginController {
       return;
     } else {
       User.setCurrentUser(db.getUser(user, pw));
-      SceneManager.getInstance().navigateTo(SceneType.WIDGETS);
+      SceneManager.getInstance().navigateTo(SceneType.DASHBOARD);
     }
   }
   @FXML
