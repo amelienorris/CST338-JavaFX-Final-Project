@@ -10,7 +10,8 @@ public class User {
     this.isAdmin = isAdmin;
   }
 
-    public static User guest() { //TODO: MOISES
+    public static User guest() {
+    return new User(-1, "Guest", false);
     }
 
     public int getUserId() {

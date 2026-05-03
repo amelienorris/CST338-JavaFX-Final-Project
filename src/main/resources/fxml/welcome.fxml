@@ -10,30 +10,42 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WelcomeController">
 
-    <VBox alignment="CENTER" layoutX="190.0" layoutY="97.0" prefHeight="206.0" prefWidth="261.0" spacing="15.0">
+    <VBox alignment="CENTER" spacing="15.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <children>
+            <ImageView fitHeight="68.0"
+                       fitWidth="91.0"
+                       pickOnBounds="true"
+                       preserveRatio="true">
+                <image>
+                    <Image url="@../images/chii.png" />
+                </image>
+            </ImageView>
+
             <Label fx:id="subtitleLabel" text="Welcome to Chiikawa">
                 <font>
                     <Font name="Open Sans" size="18.0" />
-                </font></Label>
-            <Button fx:id="signInButton" alignment="CENTER" onAction="#handleSignIn" text="Sign In">
+                </font>
+            </Label>
+
+            <Button fx:id="signInButton" onAction="#handleSignIn" text="Sign In">
                 <font>
                     <Font name="Open Sans" size="12.0" />
-                </font></Button>
+                </font>
+            </Button>
+
             <Button fx:id="signUpButton" onAction="#handleSignUp" text="Sign Up">
                 <font>
                     <Font name="Open Sans" size="12.0" />
-                </font></Button>
+                </font>
+            </Button>
+
             <Button fx:id="guestButton" onAction="#handleGuestMode" text="Guest">
                 <font>
                     <Font name="Open Sans" size="12.0" />
-                </font></Button>
+                </font>
+            </Button>
         </children>
     </VBox>
-    <ImageView fitHeight="68.0" fitWidth="91.0" layoutX="275.0" layoutY="63.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@../images/chii.png" />
-        </image>
-    </ImageView>
+
 
 </AnchorPane>
