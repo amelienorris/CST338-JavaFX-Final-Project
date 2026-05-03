@@ -3,16 +3,26 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <VBox alignment = "CENTER" spacing = "12"
   xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
   fx:controller = "controller.SignUpController">
-  <Label text = "Create Account" style = "-fx-font-size: 24px; -fx-font-weight: bold;"/>
+  <padding>
+    <Insets top="30" right="30" bottom="30" left="30"/>
+  </padding>
+  <ImageView fitHeight="300" fitWidth="400" preserveRatio="true">
+    <image>
+      <Image url = "@/UIPictures/welcomechi.png"/>
+    </image>
+  </ImageView>
+  <Label text = "Create Account" style = "-fx-font-size: 30px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS'; -fx-text-fill: white;"/>
   <TextField fx:id="usernameField" promptText="Username" />
   <PasswordField fx:id="passwordField" promptText="Password" />
   <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" />
   <Label fx:id="error" style = "-fx-text-fill: red;"/>
-  <Button text = "Sign Up" onAction="#Signup"/>
-  <Button text = "Back to Login" onAction="#handleBacktoLogin"/>
+  <Button text = "Sign Up" onAction="#Signup" style="-fx-background-color: white; -fx-text-fill: black; -fx-pref-width: 220px; -fx-pref-height: 45px; -fx-font-family: 'Comic Sans MS';"/>
+  <Button text = "Back to Login" onAction="#handleBacktoLogin" style="-fx-background-color: white; -fx-text-fill: black; -fx-pref-width: 220px; -fx-pref-height: 45px; -fx-font-family: 'Comic Sans MS';"/>
 
 </VBox>

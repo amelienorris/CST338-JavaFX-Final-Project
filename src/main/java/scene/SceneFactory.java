@@ -40,6 +40,17 @@ public class SceneFactory {
     private static final double WIDTH = 800;
     private static final double HEIGHT = 600;
     // TODO: CREATE GUEST FOR TESTING WITHOUT ADDING DATA
+    private static String themeColor(){
+        User user = User.getCurrentUser();
+        if(user==null){
+            return "#F4A8B5";
+        }
+        return switch(user.getTheme()){
+            case "blue" -> "#A8C8F4";
+            case "green" -> "#A8F4C0";
+            default -> "#F4A8B5";
+        };
+    }
     private static Scene loadScene(String path){
         URL url = SceneFactory.class.getResource(path);
         if(url == null){
@@ -49,7 +60,7 @@ public class SceneFactory {
         try {
             FXMLLoader loader = new FXMLLoader(url);
             Parent p = loader.load();
-
+            p.setStyle("-fx-background-color: " + themeColor() + ";"); // use theme grabber to get the user's preferred scene color
             return new Scene(p, WIDTH, HEIGHT); // make all scenes the same dimensions
         } catch (IOException o){
             throw new RuntimeException("failed to load " + path, o);

@@ -26,6 +26,7 @@ public class LoginController {
       passwordField.clear();
       return;
     } else {
+      User.setCurrentUser(db.getUser(user, pw));
       SceneManager.getInstance().navigateTo(SceneType.WIDGETS);
     }
   }

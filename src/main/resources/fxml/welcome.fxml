@@ -26,7 +26,7 @@
            style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
 
 
-    <Button fx:id="signInButton" text="Sign In" onAction="#handleSignIn"/>
-    <Button fx:id="signUpButton" text="Sign Up" onAction="#handleSignUp"/>
-    <Button fx:id="guestButton" text="Guest" onAction="#handleGuestMode"/>
+    <Button fx:id="signInButton" text="Sign In" onAction="#handleSignIn" style="-fx-background-color: white; -fx-text-fill: black;"/>
+    <Button fx:id="signUpButton" text="Sign Up" onAction="#handleSignUp" style="-fx-background-color: white; -fx-text-fill: black;"/>
+    <Button fx:id="guestButton" text="Guest" onAction="#handleGuestMode" style="-fx-background-color: white; -fx-text-fill: black;"/>
 </VBox>
