@@ -37,7 +37,8 @@ public class SceneFactory {
                     type + "no user data needed");  // if a scene does not need a user object, it should use create()
         };
     }
-
+    private static final double WIDTH = 800;
+    private static final double HEIGHT = 600;
     // TODO: CREATE GUEST FOR TESTING WITHOUT ADDING DATA
     private static Scene loadScene(String path){
         URL url = SceneFactory.class.getResource(path);
@@ -49,7 +50,7 @@ public class SceneFactory {
             FXMLLoader loader = new FXMLLoader(url);
             Parent p = loader.load();
 
-            return new Scene(p);
+            return new Scene(p, WIDTH, HEIGHT); // make all scenes the same dimensions
         } catch (IOException o){
             throw new RuntimeException("failed to load " + path, o);
         }
@@ -66,7 +67,7 @@ public class SceneFactory {
             FXMLLoader loader = new FXMLLoader(url);
             Parent p = loader.load();
             setup.accept(loader.getController()); // setItem() call
-            return new Scene(p);
+            return new Scene(p, WIDTH, HEIGHT); // include standard w/h
         } catch(IOException e){
             throw new RuntimeException("FXML didn't load:" + path, e);
         }
