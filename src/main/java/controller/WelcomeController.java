@@ -9,11 +9,11 @@ public class WelcomeController {
     @FXML
     private Label subtitleLabel;
 
-    @FXML
-    public void initialize(){
-        subtitleLabel.setText("hi");
-
-    }
+//    @FXML
+//    public void initialize(){
+//        subtitleLabel.setText("hi");
+//
+//    }
 
     @FXML
     private void handleSignIn(){

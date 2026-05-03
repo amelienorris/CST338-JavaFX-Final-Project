@@ -20,6 +20,7 @@ public class SceneManager {
     public static void init(Stage stage) {
         if(instance == null) {
             instance = new SceneManager(stage);
+            stage.setResizable(false); // keep windows the same size, kept changing
         }
     }
 

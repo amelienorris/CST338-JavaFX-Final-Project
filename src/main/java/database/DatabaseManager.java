@@ -104,7 +104,8 @@ public class DatabaseManager {
         return new User (
           rs.getInt("user_id"),
           rs.getString("user_name"),
-          rs.getInt("is_admin") == 1
+          rs.getInt("is_admin") == 1,
+            rs.getString("theme") // added theme handling for the ui
         );
       }
     } catch (SQLException e) {
