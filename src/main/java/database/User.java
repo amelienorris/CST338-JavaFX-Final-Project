@@ -23,7 +23,7 @@ public class User {
   } // handle theme changes & profile edits cleanly, acts as a cache
 
     public static User guest() {
-    return new User(-1, "Guest", false);
+    return new User(-1, "Guest", false, "pink");
     }
 
     public int getUserId() {
