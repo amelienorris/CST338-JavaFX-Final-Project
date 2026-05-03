@@ -35,19 +35,30 @@ public class FocusController {
 
     @FXML
     private void startTimer() {
-        //get text for the time
-        int minutes = Integer.parseInt(minutesField.getText());
-        //for stopping
+        String input = minutesField.getText();
+        if (input == null || input.isBlank()) {
+            timerLabel.setText("Enter time");
+            return;
+        }
+
+        int minutes;
+        try {
+            minutes = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            timerLabel.setText("Invalid number");
+            return;
+        }
+        if (minutes <= 0) {
+            timerLabel.setText("Must be > 0");
+            return;
+        }
         timer.stop();
         timer = new FocusTimer(minutes);
+
+        timer.setOnTick(() -> timerLabel.setText(timer.getFormattedTime()));
+        timer.setOnFinish(() -> timerLabel.setText("Done!"));
+
         timerLabel.setText(timer.getFormattedTime());
-        timer.setOnTick(() -> {
-            timerLabel.setText(timer.getFormattedTime());
-        });
-        timer.setOnFinish(() -> {
-            timerLabel.setText("Done!");
-        });
-        //reset at end
         timer.start();
     }
 //test
