@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.*?>
+
 <?import javafx.geometry.Insets?>
-<!-- CENTRALIZED WIDGET SCENE-->
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
 <GridPane hgap="12" vgap="12"
           xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="controller.WidgetController">
 
-    <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+
+    <VBox spacing="10" alignment="CENTER"
+          GridPane.columnIndex="1"
+          GridPane.rowIndex="0">
+        <ImageView fx:id="pfpImage" fitWidth="100" fitHeight="100" preserveRatio="true"/>
+        <ComboBox fx:id="pfpBox" promptText="Choose profile picture" onAction="#handlePfpChange"/>
+    </VBox>
 
     <fx:include fx:id="task" source="task-list.fxml"
                 GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+
     <fx:include fx:id="timer" source="timer.fxml"
                 GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
