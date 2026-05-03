@@ -222,9 +222,32 @@ public class TaskListController {
             return;
         }
 
-        //add new task at index 0 so newest task appears first
-        taskListView.getItems().add(0, task_text);
+        if(user.isGuest()){ // tasks only adding to ListView -> only tempory
+            //add new task at index 0 so newest task appears first
+            taskListView.getItems().add(0, task_text);
+            clear_fields();
+            return;
+        }
+
+        // task were previously only added to ListView, not the DB
+        // code below:  save to db
+        String title = titleField.getText().trim();
+        String description = descriptionArea.getText();
+
+        String due = "No due date";
+        if(dueDatePicker != null){
+            due = dueDatePicker.getValue().toString();
+        }
+
+        String priority = priorityBox.getValue();
+        if(priority == null){
+            priority = "MEDIUM";
+        }
+
+        db.insertTask(user.getUserId(), title, description, due, priority);
+        loadUser();
         clear_fields();
+
     }
 
     //updates currently selected task
