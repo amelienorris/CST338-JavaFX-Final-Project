@@ -29,12 +29,13 @@ public class DashboardController {
     public void setUser(User user) {
         this.user = (user == null) ? User.guest() : user;
 
-        if (this.user.isGuest()) {
+        if (this.user.getUserId() == -1) {
             loadGuest();
             return;
         }
 
-        loadUser();
+        welcomeLabel.setText("Welcome " + this.user.getUsername());
+        taskPreviewList.getItems().setAll(db.getTasks(this.user.getUserId()));
     }
 
     private void loadGuest() {
@@ -46,19 +47,8 @@ public class DashboardController {
         );
     }
 
-    private void loadUser(){
-        welcomeLabel.setText("Welcome " + this.user.getUsername());
-        taskPreviewList.getItems().setAll(db.getTasks(this.user.getUserId()));
-
-        if(taskPreviewList.getItems().isEmpty()){
-            taskPreviewList.getItems().setAll("No tasks yet");
-        }
-
-        // TODO: LOAD CALENDER
-    }
-
     @FXML private void handleHome() { SceneManager.getInstance().navigateTo(SceneType.WELCOME);}
-    @FXML private void handleWidgets() { SceneManager.getInstance().navigateTo(SceneType.WIDGETS); }
+    @FXML private void handleWidgets() { SceneManager.getInstance().navigateToUser(SceneType.WIDGETS, user); }
     @FXML private void handleFocus() { SceneManager.getInstance().navigateTo(SceneType.FOCUS); }
     @FXML private void handleProfile() { SceneManager.getInstance().navigateTo(SceneType.PROFILE); }
     @FXML private void handleLogin() { SceneManager.getInstance().navigateTo(SceneType.LOGIN); }

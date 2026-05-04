@@ -18,19 +18,17 @@ public class LoginController {
   @FXML
   private void Login(){
     DatabaseManager db = DatabaseManager.getInstance();
-    String user = usernameField.getText();
+    String username = usernameField.getText();
     String pw = passwordField.getText();
-
-    User loggedIn = db.getUser(user, pw);
-
-    if(loggedIn == null){
+    User user = db.getUser(username, pw);
+    if(user == null){
       error.setText("Incorrect Login.");
       usernameField.clear();
       passwordField.clear();
       return;
     } else {
-      SceneManager.getInstance().setCurrentUser(loggedIn);
-      SceneManager.getInstance().navigateTo(SceneType.DASHBOARD);
+      User.setCurrentUser(user);
+      SceneManager.getInstance().navigateToUser(SceneType.DASHBOARD, user);
     }
   }
   @FXML
