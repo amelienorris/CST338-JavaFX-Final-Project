@@ -34,7 +34,7 @@
                 <Button text="Delete Task" onAction="#handleDeleteTask" />
             </HBox>
 
-            <ListView fx:id = "taskListView" minHeight="300" prefWidth="360" VBox.vgrow="ALWAYS"/>
+            <ListView fx:id = "taskListView" minHeight="180" prefWidth="180" VBox.vgrow="ALWAYS"/>
         </VBox>
     </center>
 </BorderPane>
