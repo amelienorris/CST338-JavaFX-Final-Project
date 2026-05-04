@@ -3,18 +3,20 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane xmlns = "http://javafx.com/javafx"
             xmlns:fx = "http://javafx.com/fxml"
             fx:controller = "controller.TaskListController">
 
     <center>
-        <VBox spacing="12" prefWidth="520" maxWidth="Infinity" prefHeight="560"  minHeight="560">
+        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER">
+        <VBox spacing="12" prefWidth="520" maxWidth="Infinity">
             <padding>
                 <Insets top = "20" right = "20" bottom = "20" left = "20" />
             </padding>
 
-            <Label text = "Task List" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';" />
+            <Text text = "CHIIKAWA TASK PALS" fill = "PINK" stroke = "BLACK" strokeWidth="0.5" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-font-family: 'Comic Sans MS';" />
             <TextField fx:id="titleField" promptText=" Enter task name" />
 
             <TextArea fx:id="descriptionArea" promptText="Task Description" prefRowCount="4" />
@@ -47,5 +49,6 @@
                 </tabs>
             </TabPane>
         </VBox>
+        </ScrollPane>
     </center>
 </BorderPane>
