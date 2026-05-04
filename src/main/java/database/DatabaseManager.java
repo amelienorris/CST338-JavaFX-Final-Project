@@ -101,11 +101,14 @@ public class DatabaseManager {
       pstmt.setString(2, password);
       ResultSet rs = pstmt.executeQuery();
       while(rs.next()) {
+        System.out.println("DB theme col: " + rs.getString("theme"));
+        System.out.println("DB avatar col: " + rs.getString("avatar_character"));
         return new User (
           rs.getInt("user_id"),
           rs.getString("user_name"),
           rs.getInt("is_admin") == 1,
-            rs.getString("theme") // added theme handling for the ui
+            rs.getString("theme"), // added theme handling for the ui
+            rs.getString("avatar_character")
         );
       }
     } catch (SQLException e) {
@@ -131,14 +134,13 @@ public class DatabaseManager {
     }
     return false;
   }
-  public void updateUser(int userID, String avatar, String theme, int timer, String city){
-    String sql = "UPDATE users SET avatar_character = ?, theme = ?, timer_duration = ?, city = ? WHERE user_id = ?";
+  public void updateUser(int userID, String avatar, String theme, int timer){
+    String sql = "UPDATE users SET avatar_character = ?, theme = ?, timer_duration = ? WHERE user_id = ?";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setString(1, avatar);
       pstmt.setString(2, theme);
       pstmt.setInt(3, timer);
-      pstmt.setString(4, city);
-      pstmt.setInt(5, userID);
+      pstmt.setInt(4, userID);
       pstmt.executeUpdate();
     } catch (SQLException e) {
       System.err.println("update failed: " + e.getMessage());
