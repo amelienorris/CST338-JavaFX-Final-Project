@@ -220,6 +220,9 @@ public class TaskListController {
                 */
                 TextFlow text_flow = new TextFlow(bolded_title, rest_task);
 
+                //wraps the text so it doesnt get cut off from the list
+                text_flow.prefWidthProperty().bind(taskListView.widthProperty().subtract(25));
+
                 //clear the normal cell to display the boldes text
                 setText(null);
 

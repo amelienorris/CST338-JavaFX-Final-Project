@@ -38,11 +38,11 @@
             <TabPane prefHeight="260" >
                 <tabs>
                     <Tab text="Active Tasks" closable="false">
-                        <ListView fx:id="taskListView" minHeight="180" prefWidth="680"/>
+                        <ListView fx:id="taskListView" minHeight="180" maxWidth="Infinity"/>
                     </Tab>
 
                     <Tab text="Completed Tasks" closable="false">
-                        <ListView fx:id="completedTaskListView" minHeight="180" prefWidth="680"/>
+                        <ListView fx:id="completedTaskListView" minHeight="180" maxWidth="Infinity"/>
                     </Tab>
                 </tabs>
             </TabPane>
