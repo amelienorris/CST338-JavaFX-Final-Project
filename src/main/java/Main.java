@@ -10,7 +10,7 @@ public class Main extends Application {
   public void start (Stage stage) {
     DatabaseManager db = DatabaseManager.getInstance(); // opens / creates app.db
 
-    stage.setTitle("Todo App");
+    stage.setTitle("Chiikawa Task Pals");
     SceneManager.init(stage);
     SceneManager.getInstance().navigateTo(SceneType.WELCOME);
     stage.show () ;
