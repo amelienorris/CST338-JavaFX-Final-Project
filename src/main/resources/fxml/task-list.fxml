@@ -9,7 +9,7 @@
             fx:controller = "controller.TaskListController">
 
     <center>
-        <VBox spacing="12" prefWidth="520" prefHeight="650" minHeight="560">
+        <VBox spacing="12" prefWidth="520" maxWidth="Infinity" prefHeight="560"  minHeight="560">
             <padding>
                 <Insets top = "20" right = "20" bottom = "20" left = "20" />
             </padding>
