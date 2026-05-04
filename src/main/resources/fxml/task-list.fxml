@@ -32,9 +32,20 @@
                 <Button text="Delete Task" onAction="#handleDeleteTask" />
             </HBox>
 
-            //
+            <!-- <ListView fx:id = "taskListView" minHeight="180" prefWidth="180" VBox.vgrow="ALWAYS"/>
+            removed this and switch to tab panse so user can switch from active task to completed task window-->
 
-            <ListView fx:id = "taskListView" minHeight="180" prefWidth="180" VBox.vgrow="ALWAYS"/>
+            <TabPane VBox.vgrow="ALWAYS">
+                <tabs>
+                    <Tab text="Active Tasks" closable="false">
+                        <ListView fx:id="taskListView" minHeight="180" prefWidth="380"/>
+                    </Tab>
+
+                    <Tab text="Completed Tasks" closable="false">
+                        <ListView fx:id="completedtaskListView" minHeight="180" prefWidth="380"/>
+                    </Tab>
+                </tabs>
+            </TabPane>
         </VBox>
     </center>
 </BorderPane>

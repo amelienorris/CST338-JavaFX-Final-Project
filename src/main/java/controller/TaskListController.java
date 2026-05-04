@@ -72,6 +72,14 @@ public class TaskListController {
     @FXML
     private ListView<String> taskListView;
 
+    //enables dropdown so users can decide how to sort tasks
+    @FXML
+    private ComboBox<String> sortBox;
+
+    //displays list of tasks user has completed
+    @FXML
+    private ListView<String> completedTaskListView;
+
     //lets users choose prioroty level fo task
     @FXML
     private void initialize() {
@@ -221,10 +229,6 @@ public class TaskListController {
         });
     }
 
-    //enables dropdown so users can decide how to sort tasks
-    @FXML
-    private ComboBox<String> sortBox;
-
     //adds new task to top of list
     @FXML
     private void handleAddTask() {
@@ -249,7 +253,7 @@ public class TaskListController {
 
         String due = "No due date";
         if(dueDatePicker != null){
-            due = dueDatePicker.getValue().toString();
+            due = formatDueDate(dueDatePicker.getValue());
         }
 
         String priority = priorityBox.getValue();
@@ -401,11 +405,12 @@ public class TaskListController {
         //shows confirmation pop up, if user does not make a choice, defaulst is not complete
         ButtonType user_choice = confirm_complete.showAndWait().orElse(no_button);
 
-        //only mark task as complete is user chooses yes
+        //only mark task as complete is user chooses yes and adds it to the completed tasks
         if (user_choice == yes_button) {
-            taskListView.getItems().remove(selected_index);
+            String completed_task = taskListView.getItems().remove(selected_index);
+            completedTaskListView.getItems().add(0, completed_task);
 
-            //clears all fieldsd after task is makred as complete
+            //clears all fields after task is marked as complete
             clear_fields();
 
             //hide complete task button after task is complete
@@ -416,7 +421,7 @@ public class TaskListController {
             Alert completed_alert = new Alert(Alert.AlertType.INFORMATION);
             completed_alert.setTitle("Task Completed");
             completed_alert.setHeaderText(null);
-            completed_alert.setContentText("Congratulationa! Task has been marked as completed");
+            completed_alert.setContentText("Congratulation! Task has been marked as completed");
             completed_alert.showAndWait();
         }
     }
