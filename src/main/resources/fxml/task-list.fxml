@@ -15,7 +15,7 @@
                 <Insets top = "20" right = "20" bottom = "20" left = "20" />
             </padding>
 
-            <Label text = "CHIIKAWA TASK PALS" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: black; -fx-font-family: 'Comic Sans MS';" />
+            <Label text = "CHIIKAWA TASK PALS" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: pink; -fx-font-family: 'Comic Sans MS';" />
             <TextField fx:id="titleField" promptText=" Enter task name" />
 
             <TextArea fx:id="descriptionArea" promptText="Task Description" prefRowCount="4" />
