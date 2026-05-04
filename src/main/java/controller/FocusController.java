@@ -1,5 +1,6 @@
 package controller;
 
+import database.DatabaseManager;
 import database.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,6 +21,9 @@ public class FocusController {
     private FocusTimer timer;
     @FXML
     private TextField minutesField;
+    @FXML
+    private Label sessionCountLabel;
+    private int sessionMinutes = 0;
 
     @FXML
     public void initialize() {
@@ -32,6 +36,7 @@ public class FocusController {
         timer.setOnFinish(() -> {
             timerLabel.setText("Done!");
         });
+        refreshStats();
     }
 
     @FXML
@@ -54,10 +59,11 @@ public class FocusController {
             return;
         }
         timer.stop();
+        sessionMinutes = minutes;
         timer = new FocusTimer(minutes);
 
         timer.setOnTick(() -> timerLabel.setText(timer.getFormattedTime()));
-        timer.setOnFinish(() -> timerLabel.setText("Done!"));
+        timer.setOnFinish(() -> {timerLabel.setText("Done!"); saveSession(true); refreshStats();}); //if timer ends, update stats
 
         timerLabel.setText(timer.getFormattedTime());
         timer.start();
@@ -71,6 +77,8 @@ public class FocusController {
     @FXML
     private void endTimer() {
         timer.stop();
+        saveSession(true);
+        refreshStats();
         timer = new FocusTimer(25);
         timerLabel.setText(timer.getFormattedTime());
         timer.setOnTick(() -> {
@@ -80,8 +88,23 @@ public class FocusController {
             timerLabel.setText("Done!");
         });
     }
+    private void saveSession(boolean completed){
+        User user = User.getCurrentUser();
+        if(user.getUserId()== -1){
+            return;
+        }
+        DatabaseManager.getInstance().insertFocus(user.getUserId(), 0, sessionMinutes, true);
+    }
+    private void refreshStats(){
+        User user = User.getCurrentUser();
+        if(user.getUserId()== -1 || user ==null){
+            return;
+        }
+        int count = DatabaseManager.getInstance().getSesssionCount(user.getUserId());
+        sessionCountLabel.setText("Focus sessions completed: " + count);
+    }
 
     public void setUser(User user) {
-
+        refreshStats();
     }
 }
