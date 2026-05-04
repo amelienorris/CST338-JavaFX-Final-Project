@@ -2,6 +2,7 @@ package database;
 import java.sql.*;
 import database.User;
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 public class DatabaseManager {
@@ -77,6 +78,11 @@ public class DatabaseManager {
           """;
       stmt.execute(users);
       stmt.execute(tasks);
+      try {
+        stmt.execute("ALTER TABLE tasks ADD COLUMN repeat_frequecy TEXT DEFAULT 'None'");
+      } catch (SQLException e) {
+        System.out.println("Column already there???");
+      }
       stmt.execute(focus);
       } catch (SQLException e){
         System.err.println("createTables failed: " + e.getMessage()); // error handling from scene factory leture slides
