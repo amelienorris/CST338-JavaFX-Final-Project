@@ -35,6 +35,10 @@ public class TaskListController {
     //stores the task currently being edited
     private int editing_task  = -1; //-1 no task currently being edited
 
+    //complete task button
+    @FXML
+    private Button completeTaskButton;
+
     //displays list of tasks on screen
     @FXML
     private ListView<String> taskListView;
@@ -54,12 +58,21 @@ public class TaskListController {
         //bolds task title
         bold_task_title();
 
-        //when user clicks the task all task information loaded back to input fields to be edited
+        //when user clicks the task all task information loaded back to input fields to be edited and show complete task button
         taskListView.getSelectionModel().selectedItemProperty().addListener((task_list, old_task, new_task) -> {
             //if new_task is not null user clicked on a task on the list
             if (new_task != null) {
                 //load the details of the task back into the fields so they can edit it
                 load_task_in_fields(new_task);
+
+                //complete task button only when a task is selected
+                completeTaskButton.setVisible(true);
+                completeTaskButton.setManaged(true);
+            }
+            else {
+                //hide complete task button if no task is selected
+                completeTaskButton.setVisible(false);
+                completeTaskButton.setManaged(false);
             }
         });
     }
@@ -266,7 +279,7 @@ public class TaskListController {
 
     }
 
-    //deletes cure ntly selected task
+    //deletes currently selected task
     @FXML
     private void handleDeleteTask() {
         int selected_index = taskListView.getSelectionModel().getSelectedIndex();
@@ -304,6 +317,55 @@ public class TaskListController {
             task_deleted.setHeaderText(null);
             task_deleted.setContentText("Task has been deleted.");
             task_deleted.showAndWait();
+        }
+    }
+
+    //marks highlighted task as complete after user confirmation
+    @FXML
+    private void handleCompleteTask() {
+        //gets the task user selected
+        int selected_index = taskListView.getSelectionModel().getSelectedIndex();
+
+        //no task selected triggers warning message
+        if (selected_index == -1) {
+            showAlert("Please choose a task first");
+            return;
+        }
+
+        //shows task in cinfirmation popup
+        String selected_task = taskListView.getItems().get(selected_index);
+
+        //creates yes and no burttons for confirmation
+        ButtonType yes_button = new ButtonType("Yes, Task is complete");
+        ButtonType no_button = new ButtonType("No, not yet complete");
+
+        //confirmation pop up with task
+        Alert confirm_complete = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to mark this task as complete?\n\n"
+        + selected_task, yes_button, no_button);
+
+        confirm_complete.setTitle("Complete Task");
+        confirm_complete.setHeaderText("Confirm task is completed.");
+
+        //shows confirmation pop up, if user does not make a choice, defaulst is not complete
+        ButtonType user_choice = confirm_complete.showAndWait().orElse(no_button);
+
+        //only mark task as complete is user chooses yes
+        if (user_choice == yes_button) {
+            taskListView.getItems().remove(selected_index);
+
+            //clears all fieldsd after task is makred as complete
+            clear_fields();
+
+            //hide complete task button after task is complete
+            completeTaskButton.setVisible(false);
+            completeTaskButton.setManaged(false);
+
+            //shows confirmation message that the task has been marked as complete
+            Alert completed_alert = new Alert(Alert.AlertType.INFORMATION);
+            completed_alert.setTitle("Task Completed");
+            completed_alert.setHeaderText(null);
+            completed_alert.setContentText("Congratulation! Task has been marked as completed");
+            completed_alert.showAndWait();
         }
     }
 
