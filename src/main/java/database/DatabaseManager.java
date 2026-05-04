@@ -101,8 +101,6 @@ public class DatabaseManager {
       pstmt.setString(2, password);
       ResultSet rs = pstmt.executeQuery();
       while(rs.next()) {
-        System.out.println("DB theme col: " + rs.getString("theme"));
-        System.out.println("DB avatar col: " + rs.getString("avatar_character"));
         return new User (
           rs.getInt("user_id"),
           rs.getString("user_name"),
