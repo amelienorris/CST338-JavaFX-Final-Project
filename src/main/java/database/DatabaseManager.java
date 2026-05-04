@@ -59,7 +59,7 @@ public class DatabaseManager {
           description TEXT,
           due_date TEXT,
           priority TEXT DEFAULT 'MEDIUM',
-          repeat_frequency DEFAULT 'None'
+          repeat_frequency DEFAULT 'None',
           is_completed INTEGER DEFAULT 0,
           created_at TEXT DEFAULT (datetime('now')),
           FOREIGN KEY (user_id) REFERENCES users(user_id))
