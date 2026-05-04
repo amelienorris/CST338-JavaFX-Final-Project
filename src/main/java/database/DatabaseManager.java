@@ -90,10 +90,15 @@ public class DatabaseManager {
   }
   //CRUD
   public boolean insertUser(String username, String password) {
-    String sql = "INSERT INTO users (user_name, user_password) VALUES (?, ?)";
+    boolean admin = isWhitelistedAdmin(username);
+
+    String sql = "INSERT INTO users (user_name, user_password, is_admin) VALUES (?, ?, ?)"; // added is_admin; defaults to 0 for no
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setString(1, username);
       pstmt.setString(2, password);
+
+      pstmt.setInt(3, admin ? 1:0); // // checks if user is in whitelist, 1 -> yes admin
+
       pstmt.executeUpdate();
       return true;
     } catch (SQLException e){
@@ -287,5 +292,15 @@ public class DatabaseManager {
     if (instance != null)
       instance.close();
     instance = null;
+  }
+
+  // usernames here are assigned admin when they create an account
+  private static final List<String> WHITELIST = List.of("Amelie", "Mikaella", "Kaden", "Moises");
+
+  public static List<String> getWhitelist(){
+    return new ArrayList<>(WHITELIST);
+  }
+  public static boolean isWhitelistedAdmin(String username){
+    return WHITELIST.contains(username);
   }
 }
