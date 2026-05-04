@@ -32,6 +32,7 @@
                 <Button text="Add Task" onAction="#handleAddTask" />
                 <Button text="Edit Task" onAction="#handleEditTask" />
                 <Button fx:id="saveChangesButton" text = "Save Changes" onAction="#handleSaveChanges" visible="false" managed = "false"/>
+                <Button fx:id="completeTaskButton" text = "Save Changes" onAction="#handleCompleteTask" visible="false" managed = "false"/>
                 <Button text="Delete Task" onAction="#handleDeleteTask" />
             </HBox>
 
