@@ -7,8 +7,30 @@ import java.time.LocalDate; //for testing
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import database.DatabaseManager;
+import database.User;
+
+import javax.xml.crypto.Data;
+
 
 public class TaskListController {
+
+    //connects to database so users with an account can save and load tasks
+    private final DatabaseManager db = DatabaseManager.getInstance();
+
+    //stores current user so we can get their task list, if not a user set as guest so they can still use app
+    private User user;
+
+    //set user right when they log in or enter the app
+    public void set_user(User user) {
+        this.user = user;
+
+        if (this.user != null) {
+            taskListView.getItems().setAll(db.getTasks(this.user.getUserId()));
+            completedTaskListView.getItems().setAll(db.getCompletedTask(this.user.getUserId()));
+        }
+    }
+
+
     //input filed for task title
     @FXML
     private TextField titleField;
@@ -216,6 +238,12 @@ public class TaskListController {
             return;
         }
 
+        //if user does not have an account pop the error message
+        if (user == null) {
+            showAlert("Please create and account or log in to save tasks");
+            return;
+        }
+
         // task were previously only added to ListView, not the DB
         // code below:  save to db
         String title = titleField.getText().trim();
@@ -230,6 +258,12 @@ public class TaskListController {
         if(priority == null){
             priority = "MEDIUM";
         }
+
+        //save the tasks of the logged in user to the database
+        db.insertTask(user.getUserId(), title, description, due, priority);
+
+        //load the active tasks and theit completed tasks
+        completedTaskListView.getItems().setAll(db.getCompletedTask(user.getUserId()));
 
         clear_fields();
     }

@@ -187,6 +187,20 @@ public class DatabaseManager {
     }
     return tasks;
   }
+  public List<String> getCompletedTask(int userId) {
+    List<String> completed_task = new ArrayList<>();
+    String sql = "SELECT title FROM tasks WHERE user_id = ? AND is_completed = 1 ORDER BY due_date";
+    try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setInt(1, userId);
+      ResultSet rs = pstmt.executeQuery();
+      while (rs.next()) {
+        completed_task.add(rs.getString("title"));
+      }
+    } catch (SQLException e) {
+      System.err.println("Failed to get completed tasks" + e.getMessage());
+    }
+    return completed_task;
+  }
   public void completeTask(int taskId){
     String sql = "UPDATE tasks SET is_completed = 1 WHERE task_id = ?";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
