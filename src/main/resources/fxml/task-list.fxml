@@ -9,7 +9,7 @@
             fx:controller = "controller.TaskListController">
 
     <center>
-        <VBox spacing="12" prefWidth="520" prefHeight="650" minHeight="600">
+        <VBox spacing="12" prefWidth="520" prefHeight="650" minHeight="460">
             <padding>
                 <Insets top = "20" right = "20" bottom = "20" left = "20" />
             </padding>
@@ -35,7 +35,7 @@
             <!-- <ListView fx:id = "taskListView" minHeight="180" prefWidth="180" VBox.vgrow="ALWAYS"/>
             removed this and switch to tab panse so user can switch from active task to completed task window-->
 
-            <TabPane prefHeight="300" VBox.vgrow="ALWAYS" >
+            <TabPane prefHeight="200" VBox.vgrow="ALWAYS" >
                 <tabs>
                     <Tab text="Active Tasks" closable="false">
                         <ListView fx:id="taskListView" minHeight="180" prefWidth="380"/>
