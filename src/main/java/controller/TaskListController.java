@@ -43,6 +43,14 @@ public class TaskListController {
     @FXML
     private ListView<String> taskListView;
 
+    //enables dropdown so users can decide how to sort tasks
+    @FXML
+    private ComboBox<String> sortBox;
+
+    //displays list of tasks user has completed
+    @FXML
+    private ListView<String> completedTaskListView;
+
     //lets users choose prioroty level fo task
     @FXML
     private void initialize() {
@@ -55,8 +63,9 @@ public class TaskListController {
         //gives the options to how often their task repeats
         repeatBox.getItems().addAll("None", "Daily", "Weekly", "Bi-Weekly", "Monthly", "Yearly");
 
-        //bolds task title
-        bold_task_title();
+        //bolds task title in active and completed task
+        bold_task_title(taskListView);
+        bold_task_title(completedTaskListView);
 
         //when user clicks the task all task information loaded back to input fields to be edited and show complete task button
         taskListView.getSelectionModel().selectedItemProperty().addListener((task_list, old_task, new_task) -> {
@@ -134,9 +143,10 @@ public class TaskListController {
         }
     }
 
-    //function will bold the task title onlty
-    private void bold_task_title() {
-        taskListView.setCellFactory(listView -> new ListCell<String>() {
+
+    //function will bold the task title for active task and completed task
+    private void bold_task_title(ListView<String> bold_title) {
+        bold_title.setCellFactory(listView -> new ListCell<String>() {
             @Override
             //protected because im updating the task title to be bold, not changing what it says
             protected void updateItem(String task_title, boolean empty) {
@@ -178,10 +188,13 @@ public class TaskListController {
                 //new object for the rest of the cell so they remain not bold
                 Text rest_task = new Text(remaining_task);
 
-                /*TextFlow allows muliple text obkects on the samel cell so we can have multiple items
+                /*TextFlow allows multiple text objects on the same cell so we can have multiple items
                 allows the title to be bold while the rest stay default
                 */
                 TextFlow text_flow = new TextFlow(bolded_title, rest_task);
+
+                //wraps the text so it doesnt get cut off from the list
+                text_flow.prefWidthProperty().bind(bold_title.widthProperty().subtract(25));
 
                 //clear the normal cell to display the boldes text
                 setText(null);
@@ -191,10 +204,6 @@ public class TaskListController {
             }
         });
     }
-
-    //enables dropdown so users can decide how to sort tasks
-    @FXML
-    private ComboBox<String> sortBox;
 
     //adds new task to top of list
     @FXML
@@ -206,8 +215,30 @@ public class TaskListController {
             return;
         }
 
-        //add new task at index 0 so newest task appears first
-        taskListView.getItems().add(0, task_text);
+        if(user.isGuest()){ // tasks only adding to ListView -> only tempory
+            //add new task at index 0 so newest task appears first
+            taskListView.getItems().add(0, task_text);
+            clear_fields();
+            return;
+        }
+
+        // task were previously only added to ListView, not the DB
+        // code below:  save to db
+        String title = titleField.getText().trim();
+        String description = descriptionArea.getText();
+
+        String due = "No due date";
+        if(dueDatePicker != null){
+            due = formatDueDate(dueDatePicker.getValue());
+        }
+
+        String priority = priorityBox.getValue();
+        if(priority == null){
+            priority = "MEDIUM";
+        }
+
+        db.insertTask(user.getUserId(), title, description, due, priority);
+        loadUser();
         clear_fields();
     }
 
@@ -349,11 +380,12 @@ public class TaskListController {
         //shows confirmation pop up, if user does not make a choice, defaulst is not complete
         ButtonType user_choice = confirm_complete.showAndWait().orElse(no_button);
 
-        //only mark task as complete is user chooses yes
+        //only mark task as complete is user chooses yes and adds it to the completed tasks
         if (user_choice == yes_button) {
-            taskListView.getItems().remove(selected_index);
+            String completed_task = taskListView.getItems().remove(selected_index);
+            completedTaskListView.getItems().add(0, completed_task);
 
-            //clears all fieldsd after task is makred as complete
+            //clears all fields after task is marked as complete
             clear_fields();
 
             //hide complete task button after task is complete
