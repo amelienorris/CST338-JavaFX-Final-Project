@@ -92,8 +92,9 @@ public class TaskListController {
         //gives the options to how often their task repeats
         repeatBox.getItems().addAll("None", "Daily", "Weekly", "Bi-Weekly", "Monthly", "Yearly");
 
-        //bolds task title
-        bold_task_title();
+        //bolds task title in active and completed task
+        bold_task_title(taskListView);
+        bold_task_title(completedTaskListView);
 
         //when user clicks the task all task information loaded back to input fields to be edited and show complete task button
         taskListView.getSelectionModel().selectedItemProperty().addListener((task_list, old_task, new_task) -> {
@@ -171,9 +172,9 @@ public class TaskListController {
         }
     }
 
-    //function will bold the task title onlty
-    private void bold_task_title() {
-        taskListView.setCellFactory(listView -> new ListCell<String>() {
+    //function will bold the task title for active task and completed task
+    private void bold_task_title(ListView<String> bold_title) {
+        bold_title.setCellFactory(listView -> new ListCell<String>() {
             @Override
             //protected because im updating the task title to be bold, not changing what it says
             protected void updateItem(String task_title, boolean empty) {
@@ -215,13 +216,13 @@ public class TaskListController {
                 //new object for the rest of the cell so they remain not bold
                 Text rest_task = new Text(remaining_task);
 
-                /*TextFlow allows muliple text obkects on the samel cell so we can have multiple items
+                /*TextFlow allows multiple text objects on the same cell so we can have multiple items
                 allows the title to be bold while the rest stay default
                 */
                 TextFlow text_flow = new TextFlow(bolded_title, rest_task);
 
                 //wraps the text so it doesnt get cut off from the list
-                text_flow.prefWidthProperty().bind(taskListView.widthProperty().subtract(25));
+                text_flow.prefWidthProperty().bind(bold_title.widthProperty().subtract(25));
 
                 //clear the normal cell to display the boldes text
                 setText(null);
