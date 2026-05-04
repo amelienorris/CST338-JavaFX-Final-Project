@@ -30,7 +30,7 @@
             </padding>
 
             <children>
-                <Label fx:id="welcomeLabel" text="Welcome Guest"/>
+                <Label fx:id="welcomeLabel" text="Welcome Guest" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
 
                 <HBox spacing="20.0" alignment="CENTER">
                     <children>
@@ -46,7 +46,7 @@
 
                         <VBox spacing="10.0" alignment="CENTER_LEFT" prefWidth="160.0">
                             <children>
-                                <Label text="Today's Tasks"/>
+                                <Label text="Today's Tasks" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
                                 <ListView fx:id="taskPreviewList" prefWidth="160.0" prefHeight="140.0"/>
                             </children>
                         </VBox>

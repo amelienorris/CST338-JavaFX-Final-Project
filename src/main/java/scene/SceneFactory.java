@@ -86,6 +86,7 @@ public class SceneFactory {
         try{
             FXMLLoader loader = new FXMLLoader(url);
             Parent p = loader.load();
+            p.setStyle("-fx-background-color: " + themeColor() + ";");
             setup.accept(loader.getController()); // setItem() call
             return new Scene(p, WIDTH, HEIGHT); // include standard w/h
         } catch(IOException e){

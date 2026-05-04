@@ -14,7 +14,7 @@
                 <Insets top = "20" right = "20" bottom = "20" left = "20" />
             </padding>
 
-            <Label text = "Task List" style = "-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <Label text = "Task List" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';" />
             <TextField fx:id="titleField" promptText=" Enter task name" />
             <TextArea fx:id="descriptionArea"
                       promptText="Task Description"
