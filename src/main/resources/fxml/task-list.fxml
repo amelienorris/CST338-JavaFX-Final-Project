@@ -9,7 +9,7 @@
             fx:controller = "controller.TaskListController">
 
     <center>
-        <VBox spacing="12" prefWidth="360" prefHeight="360">
+        <VBox spacing="12" prefWidth="600" prefHeight="700">
             <padding>
                 <Insets top = "20" right = "20" bottom = "20" left = "20" />
             </padding>
@@ -34,7 +34,7 @@
                 <Button text="Delete Task" onAction="#handleDeleteTask" />
             </HBox>
 
-            <ListView fx:id = "taskListView" prefHeight="300" prefWidth="360" VBox.vgrow="ALWAYS"/>
+            <ListView fx:id = "taskListView" minHeight="300" prefWidth="600" VBox.vgrow="ALWAYS"/>
         </VBox>
     </center>
 </BorderPane>
