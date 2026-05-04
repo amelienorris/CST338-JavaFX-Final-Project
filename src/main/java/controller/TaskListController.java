@@ -416,7 +416,7 @@ public class TaskListController {
             Alert completed_alert = new Alert(Alert.AlertType.INFORMATION);
             completed_alert.setTitle("Task Completed");
             completed_alert.setHeaderText(null);
-            completed_alert.setContentText("Congratulation! Task has been marked as completed");
+            completed_alert.setContentText("Congratulationa! Task has been marked as completed");
             completed_alert.showAndWait();
         }
     }
