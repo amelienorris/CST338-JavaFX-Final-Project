@@ -276,8 +276,35 @@ public class TaskListController {
             return;
         }
 
-        taskListView.getItems().remove(selected_index);
-        clear_fields();
+        //gets task user selects  so it shows up in the confrim message
+        String selected_task = taskListView.getItems().get(selected_index);
+
+        //generates yes and no buttons for user t confirm
+        ButtonType yes_button = new ButtonType("Yes, Delete");
+        ButtonType no_button = new ButtonType("No, Keep task");
+
+        //creates confirmation alert pop up before deleting
+        Alert confirm_delete = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete task\n\n" + selected_task,
+                yes_button, no_button);
+
+        confirm_delete.setTitle("Delete Task");
+        confirm_delete.setHeaderText("Confirm Delete");
+
+        //shows popup and waits for the user to  make a choice
+        ButtonType user_choice = confirm_delete.showAndWait().orElse(no_button);
+
+        //only delete the task if user chooss yes
+        if (user_choice == yes_button) {
+            taskListView.getItems().remove(selected_index);
+            clear_fields();
+
+            //shows message telling the user the task has been deleted
+            Alert task_deleted = new Alert(Alert.AlertType.INFORMATION);
+            task_deleted.setTitle("Task Deleted");
+            task_deleted.setHeaderText(null);
+            task_deleted.setContentText("Task has been deleted.");
+            task_deleted.showAndWait();
+        }
     }
 
     //will sort task based on selected priority sorting option
