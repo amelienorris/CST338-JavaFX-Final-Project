@@ -29,12 +29,13 @@ public class DashboardController {
     public void setUser(User user) {
         this.user = (user == null) ? User.guest() : user;
 
-        if (this.user.isGuest()) {
+        if (this.user.getUserId() == -1) {
             loadGuest();
             return;
         }
 
-        loadUser();
+        welcomeLabel.setText("Welcome " + this.user.getUsername());
+        taskPreviewList.getItems().setAll(db.getTasks(this.user.getUserId()));
     }
 
     private void loadGuest() {
@@ -44,17 +45,6 @@ public class DashboardController {
                 "Use guest navigation for now",
                 "Profile scene shows defaults"
         );
-    }
-
-    private void loadUser(){
-        welcomeLabel.setText("Welcome " + this.user.getUsername());
-        taskPreviewList.getItems().setAll(db.getTasks(this.user.getUserId()));
-
-        if(taskPreviewList.getItems().isEmpty()){
-            taskPreviewList.getItems().setAll("No tasks yet");
-        }
-
-        // TODO: LOAD CALENDER
     }
 
     @FXML private void handleHome() { SceneManager.getInstance().navigateTo(SceneType.WELCOME);}

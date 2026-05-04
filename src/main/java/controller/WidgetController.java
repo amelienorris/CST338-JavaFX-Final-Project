@@ -9,36 +9,22 @@ public class WidgetController {
 //    @FXML private MusicController musicController;
 //    @FXML private QuoteController quoteController;
 //    @FXML private WeatherController weatherController;
-    private User currentUser = User.guest();
-
+    private User user;
 
     public void initialize(){ // placeholders
-        loadGuest();
+
     }
     public void setUser(User user){
-        this.currentUser = (user == null) ? User.guest() : user;
+        this.user = user;
+        if(isGuest()) return;
 
-        if(this.currentUser.isGuest()){
-            loadGuest();
-            return;
-        }
-        loadUser();
-    }
-
-    private void loadGuest(){ // TODO load info, guest vs user
-        //        weatherController.setUser(user); // only that need user put data
+//        weatherController.setUser(user); // only that need user put data
 //        streakController.setUser(user);
 //        timerController.setUser(user);
 //        taskController.setUser(user);
     }
 
-    private void loadUser(){
-        //        weatherController.setUser(user); // only that need user put data
-//        streakController.setUser(user);
-//        timerController.setUser(user);
-//        taskController.setUser(user);
+    private boolean isGuest(){
+        return user == null || user.getUserId() == -1;
     }
-
-
-
 }
