@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDate; //for testing
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import database.DatabaseManager;
 
 public class TaskListController {
     //input filed for task title
@@ -215,13 +216,6 @@ public class TaskListController {
             return;
         }
 
-        if(user.isGuest()){ // tasks only adding to ListView -> only tempory
-            //add new task at index 0 so newest task appears first
-            taskListView.getItems().add(0, task_text);
-            clear_fields();
-            return;
-        }
-
         // task were previously only added to ListView, not the DB
         // code below:  save to db
         String title = titleField.getText().trim();
@@ -237,8 +231,6 @@ public class TaskListController {
             priority = "MEDIUM";
         }
 
-        db.insertTask(user.getUserId(), title, description, due, priority);
-        loadUser();
         clear_fields();
     }
 
