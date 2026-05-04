@@ -107,6 +107,9 @@ public class TaskListController {
                 completeTaskButton.setManaged(false);
             }
         });
+
+        //gets current user that is logged in
+        set_user(User.getCurrentUser());
     }
 
     //loads the task back intp the input fields so they can be edited
@@ -263,6 +266,7 @@ public class TaskListController {
         db.insertTask(user.getUserId(), title, description, due, priority);
 
         //load the active tasks and theit completed tasks
+        taskListView.getItems().setAll(db.getTasks((user.getUserId())));
         completedTaskListView.getItems().setAll(db.getCompletedTask(user.getUserId()));
 
         clear_fields();
