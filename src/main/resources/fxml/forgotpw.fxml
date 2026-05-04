@@ -28,4 +28,6 @@
   <PasswordField fx:id="passwordField" promptText="New password" />
   <PasswordField fx:id="confirmPassword" promptText="Confirm new password" />
   <Button fx:id="confirmButton" text="Confirm" onAction="#handlePWChange" style="-fx-background-color: white; -fx-text-fill: black; -fx-pref-width: 220px; -fx-pref-height: 45px; -fx-font-family: 'Comic Sans MS';"/>
+  <Button fx:id="homeButton" text="Return to Home" onAction="#handleReturnHome" style="-fx-background-color: white; -fx-text-fill: black; -fx-pref-width: 220px; -fx-pref-height: 45px; -fx-font-family: 'Comic Sans MS';"/>
+
 </VBox>
