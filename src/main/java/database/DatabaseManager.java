@@ -181,7 +181,7 @@ public class DatabaseManager {
   }
   public List<String> getTasks(int userId){
     List<String> tasks = new ArrayList<>();
-    String sql = "SELECT title, description, due_date, priority, repeat_frequency FROM tasks WHERE user_id = ? AND is_completed = 0 ORDER BY due_date";
+    String sql = "SELECT title, description, due_date, priority, repeat_frequency FROM tasks WHERE user_id = ? AND is_completed = 0 ORDER BY task_id DESC";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setInt(1, userId);
       ResultSet rs = pstmt.executeQuery();
@@ -200,7 +200,7 @@ public class DatabaseManager {
   }
   public List<String> getCompletedTask(int userId) {
     List<String> completed_task = new ArrayList<>();
-    String sql = "SELECT title, description, due_date, priority, repeat_frequency FROM tasks WHERE user_id = ? AND is_completed = 1 ORDER BY due_date";
+    String sql = "SELECT title, description, due_date, priority, repeat_frequency FROM tasks WHERE user_id = ? AND is_completed = 1 ORDER BY task_id DESC";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setInt(1, userId);
       ResultSet rs = pstmt.executeQuery();
