@@ -2,6 +2,7 @@ package controller;
 import database.DatabaseManager;
 import database.User;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import scene.SceneManager;
 import scene.SceneType;
@@ -26,6 +27,10 @@ public class ForgotPasswordController {
       showAlert("Passwords do not match!");
     }
   }
+  @FXML
+  public void handleReturnHome() {
+    SceneManager.getInstance().navigateTo(SceneType.LOGIN);
+  }
   private void showAlert(String message) {
     Alert alert =  new Alert(Alert.AlertType.WARNING);
     alert.setTitle("Signup");
@@ -33,5 +38,4 @@ public class ForgotPasswordController {
     alert.setContentText(message);
     alert.showAndWait();
   }
-
 }
