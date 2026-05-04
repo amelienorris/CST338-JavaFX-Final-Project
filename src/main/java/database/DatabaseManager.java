@@ -2,6 +2,7 @@ package database;
 import java.sql.*;
 import database.User;
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 public class DatabaseManager {
@@ -59,6 +60,7 @@ public class DatabaseManager {
           description TEXT,
           due_date TEXT,
           priority TEXT DEFAULT 'MEDIUM',
+          repeat_frequency DEFAULT 'None',
           is_completed INTEGER DEFAULT 0,
           created_at TEXT DEFAULT (datetime('now')),
           FOREIGN KEY (user_id) REFERENCES users(user_id))
@@ -76,6 +78,11 @@ public class DatabaseManager {
           """;
       stmt.execute(users);
       stmt.execute(tasks);
+      try {
+        stmt.execute("ALTER TABLE tasks ADD COLUMN repeat_frequency TEXT DEFAULT 'None'");
+      } catch (SQLException e) {
+        System.out.println("Column already there???");
+      }
       stmt.execute(focus);
       } catch (SQLException e){
         System.err.println("createTables failed: " + e.getMessage()); // error handling from scene factory leture slides
@@ -153,14 +160,15 @@ public class DatabaseManager {
       System.err.println("delete failed: " + e.getMessage());
     }
   }
-  public int insertTask(int userId, String title, String description, String due, String priority){
-    String sql = "INSERT INTO tasks(user_id, title, description, due_date, priority) VALUES (?,?,?,?,?)";
+  public int insertTask(int userId, String title, String description, String due, String priority, String repeat){
+    String sql = "INSERT INTO tasks(user_id, title, description, due_date, priority, repeat_frequency ) VALUES (?,?,?,?,?,?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setInt(1, userId);
       pstmt.setString(2, title);
       pstmt.setString(3, description);
       pstmt.setString(4, due);
       pstmt.setString(5, priority);
+      pstmt.setString(6, repeat);
       pstmt.executeUpdate();
       ResultSet rs = pstmt.getGeneratedKeys();
       if(rs.next()){
@@ -173,17 +181,41 @@ public class DatabaseManager {
   }
   public List<String> getTasks(int userId){
     List<String> tasks = new ArrayList<>();
-    String sql = "SELECT title FROM tasks WHERE user_id = ? AND is_completed = 0 ORDER BY due_date";
+    String sql = "SELECT title, description, due_date, priority, repeat_frequency FROM tasks WHERE user_id = ? AND is_completed = 0 ORDER BY due_date";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setInt(1, userId);
       ResultSet rs = pstmt.executeQuery();
       while(rs.next()){
-        tasks.add(rs.getString("title"));
+        String task = rs.getString("title")
+          + " | " + rs.getString("description")
+          + " | Due: " + rs.getString("due_date")
+          + " | Priority: " + rs.getString("priority")
+          + " | Repeat: " + rs.getString("repeat_frequency");
+        tasks.add(task);
       }
     } catch (SQLException e){
       System.err.println("Failed to get tasks " + e.getMessage());
     }
     return tasks;
+  }
+  public List<String> getCompletedTask(int userId) {
+    List<String> completed_task = new ArrayList<>();
+    String sql = "SELECT title, description, due_date, priority, repeat_frequency FROM tasks WHERE user_id = ? AND is_completed = 1 ORDER BY due_date";
+    try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setInt(1, userId);
+      ResultSet rs = pstmt.executeQuery();
+      while (rs.next()) {
+        String task = rs.getString("title")
+                + " | " + rs.getString("description")
+                + " | Due: " + rs.getString("due_date")
+                + " | Priority: " + rs.getString("priority")
+                + " | Repeat: " +rs.getString("repeat_frequency");
+        completed_task.add(task);
+      }
+    } catch (SQLException e) {
+      System.err.println("Failed to get completed tasks" + e.getMessage());
+    }
+    return completed_task;
   }
   public void completeTask(int taskId){
     String sql = "UPDATE tasks SET is_completed = 1 WHERE task_id = ?";
