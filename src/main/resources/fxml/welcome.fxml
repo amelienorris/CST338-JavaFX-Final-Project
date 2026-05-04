@@ -4,24 +4,29 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <VBox spacing="16"
-      alignment="CENTER"
-      xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controller.WelcomeController">
+  alignment="CENTER"
+  xmlns="http://javafx.com/javafx/21"
+  xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="controller.WelcomeController"
+  style ="-fx-background-color: #F4A8B5;">
 
     <padding>
         <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
+    <ImageView fitHeight="300" fitWidth="400" preserveRatio="true">
+        <image>
+            <Image url = "@/UIPictures/homescreen.png"/>
+        </image>
+    </ImageView>
+    <Label text="Chiikawa Task Pals"
+      style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
 
-    <Label text="Chiikawa"
-           style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
 
-    <Label fx:id="subtitleLabel"
-           text="hi"/>
-
-    <Button fx:id="signInButton" text="Sign In" onAction="#handleSignIn"/>
-    <Button fx:id="signUpButton" text="Sign Up" onAction="#handleSignUp"/>
-    <Button fx:id="guestButton" text="Guest" onAction="#handleGuestMode"/>
+    <Button fx:id="signInButton" text="Sign In" onAction="#handleSignIn" style="-fx-background-color: white; -fx-text-fill: black;"/>
+    <Button fx:id="signUpButton" text="Sign Up" onAction="#handleSignUp" style="-fx-background-color: white; -fx-text-fill: black;"/>
+    <Button fx:id="guestButton" text="Guest" onAction="#handleGuestMode" style="-fx-background-color: white; -fx-text-fill: black;"/>
 </VBox>
