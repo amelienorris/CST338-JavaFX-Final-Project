@@ -26,13 +26,13 @@
             <ComboBox fx:id = "repeatBox" promptText="Repeat" />
             <ComboBox fx:id = "sortBox" promptText="Sort Tasks" onAction="#handleSortTasks"/>
 
-            <HBox spacing="10" >
-                <Button text="Add Task" onAction="#handleAddTask" />
-                <Button text="Edit Task" onAction="#handleEditTask" />
-                <Button fx:id="saveChangesButton" text = "Save Changes" onAction="#handleSaveChanges" visible="false" managed = "false"/>
-                <Button fx:id="completeTaskButton" text = "Complete Task" onAction="#handleCompleteTask" visible="false" managed = "false"/>
+            <FlowPane hgap="15" vgap="15">
+                <Button text="Add Task" onAction="#handleAddTask" prefWidth="150"/>
+                <Button text="Edit Task" onAction="#handleEditTask" prefWidth="150"/>
+                <Button fx:id="saveChangesButton" text = "Save Changes" onAction="#handleSaveChanges" visible="false" managed = "false" prefWidth="150"/>
+                <Button fx:id="completeTaskButton" text = "Complete Task" onAction="#handleCompleteTask" visible="false" managed = "false" prefWidth="150"/>
                 <Button text="Delete Task" onAction="#handleDeleteTask" />
-            </HBox>
+            </FlowPane>
 
             <!-- <ListView fx:id = "taskListView" minHeight="180" prefWidth="180" VBox.vgrow="ALWAYS"/>
             removed this and switch to tab panse so user can switch from active task to completed task window-->
