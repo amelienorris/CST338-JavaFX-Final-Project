@@ -172,6 +172,7 @@ public class TaskListController {
         }
     }
 
+
     //function will bold the task title for active task and completed task
     private void bold_task_title(ListView<String> bold_title) {
         bold_title.setCellFactory(listView -> new ListCell<String>() {
