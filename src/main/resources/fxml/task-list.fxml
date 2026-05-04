@@ -42,7 +42,7 @@
                     </Tab>
 
                     <Tab text="Completed Tasks" closable="false">
-                        <ListView fx:id="completedtaskListView" minHeight="180" prefWidth="380"/>
+                        <ListView fx:id="completedTaskListView" minHeight="180" prefWidth="380"/>
                     </Tab>
                 </tabs>
             </TabPane>
