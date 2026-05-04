@@ -9,8 +9,6 @@ import java.time.LocalDate; //for testing
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-import javax.swing.*;
-
 public class TaskListController {
     private final DatabaseManager db = DatabaseManager.getInstance();
     private User user = User.guest();
