@@ -251,6 +251,7 @@ public class TaskListController {
         // code below:  save to db
         String title = titleField.getText().trim();
         String description = descriptionArea.getText();
+        String repeat = repeatBox.getValue();
 
         String due = "No due date";
         if(dueDatePicker != null){
@@ -262,8 +263,12 @@ public class TaskListController {
             priority = "MEDIUM";
         }
 
+        if (repeat == null) {
+            repeat = "None";
+        }
+
         //save the tasks of the logged in user to the database
-        db.insertTask(user.getUserId(), title, description, due, priority);
+        db.insertTask(user.getUserId(), title, description, due, priority, repeat);
 
         //load the active tasks and theit completed tasks
         taskListView.getItems().setAll(db.getTasks((user.getUserId())));

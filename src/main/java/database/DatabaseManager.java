@@ -59,6 +59,7 @@ public class DatabaseManager {
           description TEXT,
           due_date TEXT,
           priority TEXT DEFAULT 'MEDIUM',
+          repeat_frequency DEFAULT 'None'
           is_completed INTEGER DEFAULT 0,
           created_at TEXT DEFAULT (datetime('now')),
           FOREIGN KEY (user_id) REFERENCES users(user_id))
@@ -155,14 +156,15 @@ public class DatabaseManager {
       System.err.println("delete failed: " + e.getMessage());
     }
   }
-  public int insertTask(int userId, String title, String description, String due, String priority){
-    String sql = "INSERT INTO tasks(user_id, title, description, due_date, priority) VALUES (?,?,?,?,?)";
+  public int insertTask(int userId, String title, String description, String due, String priority, String repeat){
+    String sql = "INSERT INTO tasks(user_id, title, description, due_date, priority, repeat_frequency ) VALUES (?,?,?,?,?,?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)){
       pstmt.setInt(1, userId);
       pstmt.setString(2, title);
       pstmt.setString(3, description);
       pstmt.setString(4, due);
       pstmt.setString(5, priority);
+      pstmt.setString(6, repeat);
       pstmt.executeUpdate();
       ResultSet rs = pstmt.getGeneratedKeys();
       if(rs.next()){
