@@ -38,10 +38,6 @@ public class User {
     return isAdmin;
   }
 
-  public boolean isGuest(){
-    return userId == -1;
-  }
-
   public String getTheme() {
     return theme;
   } // added gettheme to change ui backgrounds
