@@ -9,7 +9,8 @@
             fx:controller = "controller.TaskListController">
 
     <center>
-        <VBox spacing="12" prefWidth="520" maxWidth="Infinity" prefHeight="560"  minHeight="560">
+        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER">
+        <VBox spacing="12" prefWidth="520" maxWidth="Infinity">
             <padding>
                 <Insets top = "20" right = "20" bottom = "20" left = "20" />
             </padding>
@@ -47,5 +48,6 @@
                 </tabs>
             </TabPane>
         </VBox>
+        </ScrollPane>
     </center>
 </BorderPane>
