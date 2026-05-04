@@ -79,7 +79,7 @@ public class DatabaseManager {
       stmt.execute(users);
       stmt.execute(tasks);
       try {
-        stmt.execute("ALTER TABLE tasks ADD COLUMN repeat_frequecy TEXT DEFAULT 'None'");
+        stmt.execute("ALTER TABLE tasks ADD COLUMN repeat_frequency TEXT DEFAULT 'None'");
       } catch (SQLException e) {
         System.out.println("Column already there???");
       }
