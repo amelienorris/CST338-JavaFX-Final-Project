@@ -3,6 +3,7 @@ package controller;
 import database.DatabaseManager;
 import database.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -20,6 +21,7 @@ public class DashboardController {
     @FXML private Label welcomeLabel;
     @FXML private ListView<String> taskPreviewList;
     @FXML private ImageView dashPfpImage;
+    @FXML private Button adminButton;
 
     private final DatabaseManager db = DatabaseManager.getInstance();
     private User user = User.guest();
@@ -31,6 +33,12 @@ public class DashboardController {
 
     public void setUser(User user) {
         this.user = (user == null) ? User.guest() : user;
+
+        boolean isAdmin = this.user.isAdmin();
+        if(adminButton != null){
+            adminButton.setVisible(isAdmin);
+            adminButton.setManaged(isAdmin);
+        }
 
         if (this.user.getUserId() == -1) {
             loadGuest();
@@ -48,6 +56,13 @@ public class DashboardController {
         }
         welcomeLabel.setText("Welcome, " + this.user.getUsername());
         taskPreviewList.getItems().setAll(db.getTasks(this.user.getUserId()));
+    }
+
+    @FXML
+    private void handleAdmin(){
+        if(user != null && user.isAdmin()){
+            SceneManager.getInstance().navigateToUser(SceneType.ADMIN, user);
+        }
     }
 
     private void loadGuest() {

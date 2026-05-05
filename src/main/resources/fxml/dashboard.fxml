@@ -18,6 +18,11 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.DashboardController">
 
+    <HBox prefHeight="40" alignment="CENTER_LEFT">
+        <padding><Insets left="12" right="12" top = "5" bottom = "5"/></padding>
+        <Button fx:id="adminButton" text="Admin" onAction="#handleAdmin" visible="false" managed="false" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-family: 'Comic Sans MS';"/>
+    </HBox>
+
     <children>
         <VBox spacing="24.0"
               alignment="CENTER"
