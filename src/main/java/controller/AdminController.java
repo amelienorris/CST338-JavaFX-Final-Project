@@ -13,10 +13,14 @@ public class AdminController {
     private User user;
     @FXML private Label currentAdminLabel;
 
+    @FXML private ListView<String> userListView;
+
+    private final DatabaseManager db = DatabaseManager.getInstance();
+
     @FXML
     public void initialize(){
         titleLabel.setText("Admin Dashboard");
-        currentAdminLabel.setText("No admin loaded");
+        userListView.setPlaceholder(new Label("No users"));
     }
 
     public void setUser(User user){
@@ -26,6 +30,12 @@ public class AdminController {
         this.user = user;
         User.setCurrentUser(user);
         currentAdminLabel.setText("Admin: "  + user.getUsername());
+        refreshList();
+    }
+
+
+    private void refreshList() {
+        userListView.getItems().setAll(db.getAllUsers());
     }
 
     @FXML
