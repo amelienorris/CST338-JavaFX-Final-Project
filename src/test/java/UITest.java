@@ -43,17 +43,19 @@ public class UITest extends ApplicationTest {
         DatabaseManager.resetForTesting();
     }
 
+    // TODO: ALL DASHBOARDS ARE UPDATING
     @Test
     void adbimLoginLoadsAdminDashboard(){ // dashboard layout updating
         addUser("Moises", "1234");
 
         login("Moises", "1234");
+        waitUI();
         Label title = lookup("#titleLabel").query();
         Label currentAdmin = lookup("#currenAdminLabel").query();
         ListView<?> users = lookup("userListView").queryListView();
 
         assertEquals("Admin Dashboard", title.getText());
-        assertTrue(currentAdmin.getText().contains("Admin: Moises"));
+        assertTrue(currentAdmin.getText().contains("Moises"));
         assertListViewContains(users, "Moises");        // show all users list in admin dashboard
         assertTrue(User.getCurrentUser().isAdmin());
     }
@@ -64,10 +66,26 @@ public class UITest extends ApplicationTest {
         DatabaseManager.getInstance().insertTask(user.getUserId(), "task", "UI test", "2026-05-05", "HIGH", "None");
 
         login("hi", "1234");
+        waitUI();
+        Label welcome = lookup("#welcomeLabel").query();
         ListView<?> tasks = lookup("#taskPreviewList").queryListView();
 
         assertListViewContains(tasks, "task");
         assertFalse(User.getCurrentUser().isAdmin());
+        assertTrue(welcome.getText().contains("hi"));
+
+    }
+
+    @Test
+    void guestLoginLoadsPreviewDashboard(){
+        clickOn("#guestButton");
+
+        waitUI();
+        Label welcome = lookup("#welcomeLabel").query();
+        ListView<?> tasks = lookup("#taskPreviewList").queryListView();
+        assertTrue(welcome.getText().contains("Guest"));
+
+        assertListViewContains(tasks, "Log in to sync tasks");
     }
 
     private void assertListViewContains(ListView<?> list, String key) {
