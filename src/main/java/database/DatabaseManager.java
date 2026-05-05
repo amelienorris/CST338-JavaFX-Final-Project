@@ -307,7 +307,7 @@ public class DatabaseManager {
   public List<String> getAllUsers(){
     List<String> users = new ArrayList<>();
     String sql = """
-            SELECT user_name, theme, avatar character, is_admin
+            SELECT user_name, theme, avatar_character, is_admin
             FROM users
             ORDER BY user_name
             """;
