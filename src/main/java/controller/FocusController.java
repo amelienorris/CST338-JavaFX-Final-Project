@@ -69,9 +69,9 @@ public class FocusController {
         timer.start();
     }
 //test
-    @FXML
+@FXML
     private void pauseTimer() {
-        timer.pause();
+      timer.togglePause();
     }
 
     @FXML

@@ -46,6 +46,13 @@ public class FocusTimer {
         timeline.pause();
     }
 
+    public void togglePause() {
+        if (timeline.getStatus() == Timeline.Status.RUNNING) {
+            timeline.pause();
+        } else {
+            timeline.play();
+        }
+    }
     public void stop() {
         timeline.stop();
     }
