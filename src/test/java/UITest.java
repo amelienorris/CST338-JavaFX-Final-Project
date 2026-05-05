@@ -2,6 +2,8 @@ import database.DatabaseManager;
 import database.User;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -76,14 +78,25 @@ public class UITest extends ApplicationTest {
         return user;
     }
     private void login(String username, String password){
-
         clickOn("#signInButton");
+        waitUI();
+        typeIntoField(username, "#usernameField");
+        typeIntoField(password, "#passwordField");
+        clickOn("Log in");
+        waitUI();
 
+        assertNotNull(User.getCurrentUser());
+        assertEquals(username, User.getCurrentUser().getUsername());
     }
     private void waitUI(){
         WaitForAsyncUtils.waitForFxEvents(); // pause test until ui loads
         sleep(900); // time for fade transition
         WaitForAsyncUtils.waitForFxEvents();
+    }
+
+    private void typeIntoField(String text, String fxmlID) {
+        TextInputControl field = lookup(fxmlID).query();
+        interact(() -> field.setText(text));
     }
 
 }
