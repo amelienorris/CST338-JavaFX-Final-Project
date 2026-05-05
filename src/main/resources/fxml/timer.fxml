@@ -12,12 +12,13 @@
             fx:controller="controller.FocusController"
             prefHeight="200.0" prefWidth="600.0">
 
-    <VBox spacing="15" alignment="CENTER"
+    <VBox spacing="8" alignment="CENTER"
           AnchorPane.topAnchor="20.0"
           AnchorPane.leftAnchor="100.0"
           AnchorPane.rightAnchor="100.0">
         <Label text = "Start a focus session!" wrapText="true" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
-        <Label fx:id="sessionCountLabel" text = "Sessions completed: 0" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
+        <Label fx:id="sessionCountLabel" text = "Sessions completed: 0" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
+        <Label text = "Enter time in minutes" wrapText="true" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
         <TextField fx:id="minutesField" promptText="Enter minutes"/>
 
         <Label fx:id="timerLabel" text="25:00" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
