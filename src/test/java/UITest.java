@@ -1,14 +1,13 @@
 import database.DatabaseManager;
 import database.User;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
+import scene.SceneFactory;
 import scene.SceneManager;
 import scene.SceneType;
 
@@ -88,6 +87,22 @@ public class UITest extends ApplicationTest {
         assertListViewContains(tasks, "Log in to sync tasks");
     }
 
+    @Test
+    void changeAvatarAndBackground(){
+        addUser("widget", "1234");
+        login("widget", "1234");
+        waitUI();
+        clickOn("widgets");
+        waitUI();
+
+        selectPref("#pfpBox", "chikawa.png");
+        selectPref("#colorBox", "Blue");
+
+        assertEquals("chikawa.png", User.getCurrentUser().getAvatar());
+        assertEquals("blue", User.getCurrentUser().getTheme());
+
+    }
+
     private void assertListViewContains(ListView<?> list, String key) {
         boolean found = false;
         for(Object i: list.getItems()){
@@ -127,6 +142,14 @@ public class UITest extends ApplicationTest {
     private void typeIntoField(String text, String fxmlID) {
         TextInputControl field = lookup(fxmlID).query();
         interact(() -> field.setText(text));
+    }
+    private void selectPref(String fxmlID, String value){
+        ComboBox<String> box = lookup(fxmlID).queryComboBox();
+        interact(() -> {
+            box.getSelectionModel().select(value);
+            box.fireEvent(new ActionEvent(box, box));
+        });
+        waitUI();
     }
 
 
