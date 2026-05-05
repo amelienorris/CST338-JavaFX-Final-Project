@@ -38,10 +38,4 @@ public class AdminController {
         SceneManager.getInstance().navigateToUser(SceneType.DASHBOARD, user);
     }
 
-    @FXML
-    private void handleLogout(){
-        User.clearCurrentUser();
-        SceneManager.getInstance().clearAllCache();
-        SceneManager.getInstance().navigateTo(SceneType.WELCOME);
-    }
 }
