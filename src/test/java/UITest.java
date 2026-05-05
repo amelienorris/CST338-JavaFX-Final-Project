@@ -44,7 +44,7 @@ public class UITest extends ApplicationTest {
     }
 
     @Test
-    void adbimLoginLoadsAdminDashboard(){
+    void adbimLoginLoadsAdminDashboard(){ // dashboard layout updating
         addUser("Moises", "1234");
 
         login("Moises", "1234");
@@ -56,6 +56,18 @@ public class UITest extends ApplicationTest {
         assertTrue(currentAdmin.getText().contains("Admin: Moises"));
         assertListViewContains(users, "Moises");        // show all users list in admin dashboard
         assertTrue(User.getCurrentUser().isAdmin());
+    }
+
+    @Test
+    void userLoginLoadsDashboard(){ // dashboard layout updating
+        User user = addUser("hi", "1234");
+        DatabaseManager.getInstance().insertTask(user.getUserId(), "task", "UI test", "2026-05-05", "HIGH", "None");
+
+        login("hi", "1234");
+        ListView<?> tasks = lookup("#taskPreviewList").queryListView();
+
+        assertListViewContains(tasks, "task");
+        assertFalse(User.getCurrentUser().isAdmin());
     }
 
     private void assertListViewContains(ListView<?> list, String key) {
@@ -98,5 +110,7 @@ public class UITest extends ApplicationTest {
         TextInputControl field = lookup(fxmlID).query();
         interact(() -> field.setText(text));
     }
+
+
 
 }
