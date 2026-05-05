@@ -41,6 +41,10 @@ public class FocusController {
 
     @FXML
     private void startTimer() {
+        if (timer != null && timer.isPaused()) {
+            timer.start();
+            return;
+        }
         String input = minutesField.getText();
         if (input == null || input.isBlank()) {
             timerLabel.setText("Enter time");
@@ -68,6 +72,7 @@ public class FocusController {
         timerLabel.setText(timer.getFormattedTime());
         timer.start();
     }
+
 //test
     @FXML
     private void pauseTimer() {

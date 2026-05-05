@@ -43,7 +43,7 @@ public class DatabaseManager {
           user_name TEXT UNIQUE NOT NULL,
           user_password TEXT NOT NULL,
           is_admin INTEGER DEFAULT 0,
-          avatar_character TEXT DEFAULT 'chiikawa',
+          avatar_character TEXT DEFAULT 'default.png',
           theme TEXT DEFAULT 'pink',
           timer_duration INTEGER DEFAULT 25,
           city TEXT,
