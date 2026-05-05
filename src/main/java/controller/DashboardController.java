@@ -39,8 +39,12 @@ public class DashboardController {
         String avatar = this.user.getAvatar();
         if(avatar!=null){
             String path = "/pfps/" + avatar;
-            Image image = new Image(getClass().getResource(path).toExternalForm(), 180, 180, true, true);
-            dashPfpImage.setImage(image); // get the users pfp, display when dashboard loads up
+            try{
+                Image image = new Image(getClass().getResourceAsStream(path), 180, 180, true, true);
+                dashPfpImage.setImage(image); // fix for admin user profile loading differently
+            } catch (Exception e){
+                dashPfpImage.setImage(new Image(getClass().getResourceAsStream("/pfps/default.png")));
+            }
         }
         welcomeLabel.setText("Welcome, " + this.user.getUsername());
         taskPreviewList.getItems().setAll(db.getTasks(this.user.getUserId()));
