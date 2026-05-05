@@ -29,7 +29,7 @@ public class LoginController {
     } else {
       User.setCurrentUser(user);
       if(user.isAdmin()){
-        SceneManager.getInstance().navigateTo(SceneType.ADMIN, user);
+        SceneManager.getInstance().navigateToUser(SceneType.ADMIN, user);
       } else {
         SceneManager.getInstance().navigateToUser(SceneType.DASHBOARD, user);
       }
