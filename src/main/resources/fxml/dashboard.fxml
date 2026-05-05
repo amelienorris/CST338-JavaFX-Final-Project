@@ -64,7 +64,7 @@
                         <Button onAction="#handleProfile" style="-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-pref-width: 220px; -fx-pref-height: 45px; -fx-font-family: 'Comic Sans MS';" text="Profile" />
                     </children>
                 </HBox>
-                 <Button fx:id="adminButton" managed="True" onAction="#handleAdmin" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-family: 'Comic Sans MS';" text="Admin" visible="True" />
+                 <Button fx:id="adminButton" managed="false" onAction="#handleAdmin" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-family: 'Comic Sans MS';" text="Admin" visible="false" />
             </children>
         </VBox>
     </children>
