@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import scene.SceneFactory;
 import scene.SceneManager;
+import scene.SceneType;
 
 public class ProfileController {
 
@@ -62,6 +63,15 @@ public class ProfileController {
     };
     user.setTheme(selected);
     colorBox.getScene().getRoot().setStyle("-fx-background-color: " + colorcode + ";");
+  }
+  @FXML
+  private void handleBack(){
+    SceneManager.getInstance().navigateToUser(SceneType.DASHBOARD, user);
+  }
+  @FXML
+  private void handleLogOut(){
+    User.clearCurrentUser();
+    SceneManager.getInstance().navigateTo(SceneType.LOGIN);
   }
 
   private void setPfpImage(String fileName) {

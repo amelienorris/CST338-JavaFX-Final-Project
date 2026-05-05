@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.*?>
-<GridPane hgap="12" vgap="12"
-  xmlns="http://javafx.com/javafx"
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
   fx:controller="controller.ProductivityController">
+  <HBox prefHeight="40" alignment="CENTER_LEFT">
+    <padding><Insets left="12" right="12" top = "5" bottom = "5"/></padding>
+    <Button text ="Back" onAction="#handleBack" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-family: 'Comic Sans MS';"/>
+  </HBox>
 
-  <fx:include fx:id="task" source="/fxml/task-list.fxml" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-  <fx:include fx:id="timer" source="/fxml/timer.fxml"    GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-
-  <rowConstraints>
-    <RowConstraints percentHeight="60"/>
-    <RowConstraints percentHeight="40"/>
-  </rowConstraints>
-  <columnConstraints>
-    <ColumnConstraints percentWidth="100"/>
-  </columnConstraints>
-</GridPane>
+  <fx:include fx:id="task" source="/fxml/task-list.fxml"></fx:include>
+  <fx:include fx:id="timer" source="/fxml/timer.fxml"></fx:include>
+</VBox>

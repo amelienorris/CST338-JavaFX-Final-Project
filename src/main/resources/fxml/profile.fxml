@@ -6,18 +6,24 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.Label?>
-<VBox spacing="10" alignment="CENTER"
+<?import javafx.scene.control.Button?>
+<VBox spacing="10" alignment="TOP_CENTER"
   xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
   fx:controller="controller.ProfileController">
-
-  <padding>
-    <Insets top="16" right="16" bottom="16" left="16"/>
-  </padding>
-  <Label text = "Profile picture" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
-  <ImageView fx:id="pfpImage" fitWidth="100" fitHeight="100" preserveRatio="true"/>
-  <ComboBox fx:id="pfpBox" promptText="Choose profile picture" onAction="#handlePfpChange"/>
-  <Label text = "Background color" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
-  <ComboBox fx:id="colorBox" promptText="Choose a background color" onAction="#handleThemeChange"/>
-
+  <HBox prefHeight="40" alignment="CENTER_LEFT">
+    <padding><Insets left="12" right="12"/></padding>
+    <Button text ="Back" onAction="#handleBack" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-family: 'Comic Sans MS';"/>
+  </HBox>
+  <VBox spacing = "10" alignment="CENTER">
+    <padding>
+      <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+    <Label text = "Profile picture" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
+    <ImageView fx:id="pfpImage" fitWidth="100" fitHeight="100" preserveRatio="true"/>
+    <ComboBox fx:id="pfpBox" promptText="Choose profile picture" onAction="#handlePfpChange"/>
+    <Label text = "Background color" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
+    <ComboBox fx:id="colorBox" promptText="Choose a background color" onAction="#handleThemeChange"/>
+    <Button text = "Log out" onAction="#handleLogOut" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-family: 'Comic Sans MS';"></Button>
+  </VBox>
 </VBox>
