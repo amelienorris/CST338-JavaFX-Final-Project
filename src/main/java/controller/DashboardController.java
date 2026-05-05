@@ -50,6 +50,6 @@ public class DashboardController {
     @FXML private void handleHome() { SceneManager.getInstance().navigateTo(SceneType.WELCOME);}
     @FXML private void handleProductivity() { SceneManager.getInstance().navigateToUser(SceneType.PRODUCTIVITY, user); }
 //    @FXML private void handleFocus() { SceneManager.getInstance().navigateTo(SceneType.FOCUS); }
-    @FXML private void handleProfile() { SceneManager.getInstance().navigateTo(SceneType.PROFILE); }
+    @FXML private void handleProfile() { SceneManager.getInstance().navigateToUser(SceneType.PROFILE, user); }
     @FXML private void handleLogin() { SceneManager.getInstance().navigateTo(SceneType.LOGIN); }
 }
