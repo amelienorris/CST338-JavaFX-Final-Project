@@ -1,5 +1,5 @@
 package controller;
-
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -45,7 +45,9 @@ public class FocusTimer {
     public void pause() {
         timeline.pause();
     }
-
+    public boolean isPaused() {
+        return timeline.getStatus() == Animation.Status.PAUSED;
+    }
     public void stop() {
         timeline.stop();
     }
