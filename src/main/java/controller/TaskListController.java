@@ -267,7 +267,7 @@ public class TaskListController {
 
         String priority = priorityBox.getValue();
         if(priority == null){
-            priority = "MEDIUM";
+            priority = "No priority";
         }
 
         if (repeat == null) {
@@ -405,10 +405,10 @@ public class TaskListController {
             return;
         }
 
-        //shows task in cinfirmation popup
+        //shows task in confirmation popup
         String selected_task = taskListView.getItems().get(selected_index);
 
-        //creates yes and no burttons for confirmation
+        //creates yes and no buttons for confirmation
         ButtonType yes_button = new ButtonType("Yes, Task is complete");
         ButtonType no_button = new ButtonType("No, not yet complete");
 
@@ -422,10 +422,36 @@ public class TaskListController {
         //shows confirmation pop up, if user does not make a choice, defaulst is not complete
         ButtonType user_choice = confirm_complete.showAndWait().orElse(no_button);
 
-        //only mark task as complete is user chooses yes and adds it to the completed tasks
+        //only mark task as complete is user chooses yes and adds it to the completed tasks //.remove(selected_index)
         if (user_choice == yes_button) {
-            String completed_task = taskListView.getItems().remove(selected_index);
-            completedTaskListView.getItems().add(0, completed_task);
+            String completed_task = taskListView.getItems().get(selected_index);
+
+            //split the string into the right categories
+            String[] task_parts = completed_task.split("\\|");
+
+            //get the title from the first part of task by index
+            String title = task_parts[0].trim();
+
+            //this get the description
+            String description = task_parts[1].trim();
+
+            //get the date only
+            String due = task_parts[2].replace("Due:", "").trim();
+
+            //get priority level
+            String priority = task_parts[3].replace("Priority:", "").trim();
+
+            //get repeat frequency
+            String repeat = task_parts[4].replace("Repeat:", "").trim();
+
+            //save completed task to database
+            db.markTasksDone(user.getUserId(), title, description, due, priority, repeat);
+
+            //get the active tasks from database
+            taskListView.getItems().setAll(db.getTasks(user.getUserId()));
+
+            //get completed task from the database
+            completedTaskListView.getItems().setAll(db.getCompletedTask(user.getUserId()));
 
             //clears all fields after task is marked as complete
             clear_fields();
