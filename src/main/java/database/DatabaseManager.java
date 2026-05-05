@@ -303,4 +303,31 @@ public class DatabaseManager {
   public static boolean isWhitelistedAdmin(String username){
     return WHITELIST.contains(username);
   }
+
+  public List<String> getAllUsers(){
+    List<String> users = new ArrayList<>();
+    String sql = """
+            SELECT user_name, theme, avatar character, is_admin
+            FROM users
+            ORDER BY user_name
+            """;
+
+    try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+      ResultSet rs = pstmt.executeQuery();{
+        while(rs.next()){
+          String username = rs.getString("user_name");
+          String theme = rs.getString("theme");
+          String avatar = rs.getString("avatar_character");
+          boolean admin = rs.getInt("is_admin") == 1;
+
+          String info = username + " | Theme : " + theme + " | Character: " + avatar + " | Admin: " + (admin ? "Yes" :"No");
+          users.add(info);
+
+        }
+      }
+    } catch (SQLException e) {
+      System.err.println("getallusers failed");
+    }
+    return users;
+  }
 }
