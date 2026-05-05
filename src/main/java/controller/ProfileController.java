@@ -71,7 +71,7 @@ public class ProfileController {
   @FXML
   private void handleLogOut(){
     User.clearCurrentUser();
-    SceneManager.getInstance().navigateTo(SceneType.LOGIN);
+    SceneManager.getInstance().navigateTo(SceneType.WELCOME);
   }
 
   private void setPfpImage(String fileName) {

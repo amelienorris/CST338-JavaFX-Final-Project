@@ -56,7 +56,7 @@ public class DatabaseManagerTest {
     User user = db.getUser("chiitest", "123");
     db.insertTask(user.getUserId(), "do homework", "blablabla", "2026-05-23", "HIGH", "0");
     List<String> tasks = db.getTasks(user.getUserId());
-    assertTrue(tasks.contains("do homework"));
+    assertTrue(tasks.contains("do homework | blablabla | Due: 2026-05-23 | Priority: HIGH | Repeat: 0"));
   }
   @Test
   void testUpdateTask(){
