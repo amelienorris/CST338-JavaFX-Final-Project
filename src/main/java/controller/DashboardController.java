@@ -7,6 +7,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import scene.SceneManager;
 import scene.SceneType;
 
@@ -17,6 +19,7 @@ public class DashboardController {
     public Label calendarStatusLabel;
     @FXML private Label welcomeLabel;
     @FXML private ListView<String> taskPreviewList;
+    @FXML private ImageView dashPfpImage;
 
     private final DatabaseManager db = DatabaseManager.getInstance();
     private User user = User.guest();
@@ -33,8 +36,13 @@ public class DashboardController {
             loadGuest();
             return;
         }
-
-        welcomeLabel.setText("Welcome " + this.user.getUsername());
+        String avatar = this.user.getAvatar();
+        if(avatar!=null){
+            String path = "/pfps/" + avatar;
+            Image image = new Image(getClass().getResource(path).toExternalForm(), 180, 180, true, true);
+            dashPfpImage.setImage(image); // get the users pfp, display when dashboard loads up
+        }
+        welcomeLabel.setText("Welcome, " + this.user.getUsername());
         taskPreviewList.getItems().setAll(db.getTasks(this.user.getUserId()));
     }
 
@@ -48,8 +56,8 @@ public class DashboardController {
     }
 
     @FXML private void handleHome() { SceneManager.getInstance().navigateTo(SceneType.WELCOME);}
-    @FXML private void handleWidgets() { SceneManager.getInstance().navigateToUser(SceneType.WIDGETS, user); }
-    @FXML private void handleFocus() { SceneManager.getInstance().navigateTo(SceneType.FOCUS); }
-    @FXML private void handleProfile() { SceneManager.getInstance().navigateTo(SceneType.PROFILE); }
+    @FXML private void handleProductivity() { SceneManager.getInstance().navigateToUser(SceneType.PRODUCTIVITY, user); }
+//    @FXML private void handleFocus() { SceneManager.getInstance().navigateTo(SceneType.FOCUS); }
+    @FXML private void handleProfile() { SceneManager.getInstance().navigateToUser(SceneType.PROFILE, user); }
     @FXML private void handleLogin() { SceneManager.getInstance().navigateTo(SceneType.LOGIN); }
 }

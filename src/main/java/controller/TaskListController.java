@@ -247,6 +247,13 @@ public class TaskListController {
             return;
         }
 
+//        if(User.isGuest()){ // tasks only adding to ListView -> only tempory
+//            //add new task at index 0 so newest task appears first
+//            taskListView.getItems().add(0, task_text);
+//            clear_fields();
+//            return;
+//        }
+
         // task were previously only added to ListView, not the DB
         // code below:  save to db
         String title = titleField.getText().trim();

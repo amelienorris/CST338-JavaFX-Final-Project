@@ -17,9 +17,10 @@ public class SceneFactory {
             case LOGIN -> loadScene("/fxml/login.fxml");
             case SIGNUP -> loadScene("/fxml/signup.fxml");
             case DASHBOARD -> loadScene("/fxml/dashboard.fxml");
-            case WIDGETS -> loadScene("/fxml/widgets.fxml"); // initialze placeholder content
+            case WIDGETS -> loadScene("/fxml/focus.fxml"); // initialze placeholder content
+            case PRODUCTIVITY -> loadScene("/fxml/productivity.fxml");
             case FOCUS -> loadScene("/fxml/focus.fxml");
-            case PROFILE -> loadScene("/fxml/profile");
+            case PROFILE -> loadScene("/fxml/profile.fxml");
             case FORGOTPW -> loadScene("/fxml/forgotpw.fxml");
             case ADMIN -> throw new IllegalStateException("Admin requires login"); // blocking admin creation, needs login first
         };
@@ -30,12 +31,14 @@ public class SceneFactory {
         return switch(type){
             case DASHBOARD -> loadSceneController("/fxml/dashboard.fxml",
                     (DashboardController c) -> c.setUser(user));
-            case WIDGETS -> loadSceneController("/fxml/widgets.fxml",
-                    (WidgetController c) -> c.setUser(user));       // loads data after log in
+//            case WIDGETS -> loadSceneController("/fxml/widgets.fxml",
+//                    (ProfileController c) -> c.setUser(user));       // loads data after log in
             case FOCUS -> loadSceneController("/fxml/focus.fxml",
                     (FocusController c) -> c.setUser(user));
             case PROFILE -> loadSceneController("/fxml/profile.fxml",
                     (ProfileController c) -> c.setUser(user));
+            case PRODUCTIVITY -> loadSceneController("/fxml/productivity.fxml",
+                    (ProductivityController c) -> c.setUser(user));
             case ADMIN -> { if (!user.isAdmin()) {
                 throw new SecurityException(("admin not initialized"));     // admin must come through the log in
             }
