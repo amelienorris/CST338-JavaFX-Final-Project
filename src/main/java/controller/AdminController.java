@@ -9,16 +9,14 @@ import scene.SceneManager;
 import scene.SceneType;
 
 public class AdminController {
-    @FXML private Label ittleLabel;
+    @FXML private Label titleLabel;
     private User user;
     @FXML private Label currentAdminLabel;
-    @FXML private ListView<String> whitelist;
 
     @FXML
     public void initialize(){
-        ittleLabel.setText("Admin Dashboard");
+        titleLabel.setText("Admin Dashboard");
         currentAdminLabel.setText("No admin loaded");
-        whitelist.getItems().setAll(DatabaseManager.getWhitelist());
     }
 
     public void setUser(User user){
@@ -32,9 +30,6 @@ public class AdminController {
 
     @FXML
     private void handleDashboard(){
-        if(user == null){
-            user = User.getCurrentUser();
-        }
         SceneManager.getInstance().navigateToUser(SceneType.DASHBOARD, user);
     }
 
