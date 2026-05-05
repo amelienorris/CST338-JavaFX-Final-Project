@@ -52,9 +52,9 @@ public class DatabaseManagerTest {
   @Test
   void testInsertTask(){
     DatabaseManager db = DatabaseManager.getInstance();
-    db.insertUser("chiikawa", "123");
-    User user = db.getUser("chiikawa", "123");
-    db.insertTask(user.getUserId(), "do homework", "blablabla", "2026-05-23", "HIGH");
+    db.insertUser("chiitest", "123");
+    User user = db.getUser("chiitest", "123");
+    db.insertTask(user.getUserId(), "do homework", "blablabla", "2026-05-23", "HIGH", "0");
     List<String> tasks = db.getTasks(user.getUserId());
     assertTrue(tasks.contains("do homework"));
   }
@@ -63,7 +63,7 @@ public class DatabaseManagerTest {
     DatabaseManager db = DatabaseManager.getInstance();
     db.insertUser("chiikawa", "123");
     User user = db.getUser("chiikawa", "123");
-    int id = db.insertTask(user.getUserId(), "do homework", "blablabla", "2026-05-23", "HIGH");
+    int id = db.insertTask(user.getUserId(), "do homework", "blablabla", "2026-05-23", "HIGH", "0");
     db.completeTask(id);
     List<String> tasks = db.getTasks(user.getUserId());
     assertFalse(tasks.contains("do homework"));
@@ -73,7 +73,7 @@ public class DatabaseManagerTest {
     DatabaseManager db = DatabaseManager.getInstance();
     db.insertUser("chiikawa", "123");
     User user = db.getUser("chiikawa", "123");
-    int id = db.insertTask(user.getUserId(), "do homework", "blablabla", "2026-05-23", "HIGH");
+    int id = db.insertTask(user.getUserId(), "do homework", "blablabla", "2026-05-23", "HIGH", "0");
     db.deleteTask(id);
     List<String> tasks = db.getTasks(user.getUserId());
     assertFalse(tasks.contains("do homework"));

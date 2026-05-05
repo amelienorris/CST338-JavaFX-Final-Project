@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<GridPane hgap="12" vgap="12"
+  xmlns="http://javafx.com/javafx"
+  xmlns:fx="http://javafx.com/fxml"
+  fx:controller="controller.ProductivityController">
+
+  <fx:include fx:id="task" source="/fxml/task-list.fxml" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+  <fx:include fx:id="timer" source="/fxml/timer.fxml"    GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+  <rowConstraints>
+    <RowConstraints percentHeight="60"/>
+    <RowConstraints percentHeight="40"/>
+  </rowConstraints>
+  <columnConstraints>
+    <ColumnConstraints percentWidth="100"/>
+  </columnConstraints>
+</GridPane>

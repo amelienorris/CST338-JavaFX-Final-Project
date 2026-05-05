@@ -63,10 +63,9 @@
 
                 <HBox spacing="12.0" alignment="CENTER">
                     <children>
-                        <Button text="home" onAction="#handleHome"/>
-                        <Button text="widgets" onAction="#handleWidgets"/>
-                        <Button text="focus" onAction="#handleFocus"/>
-                        <Button text="profile" onAction="#handleProfile"/>
+                        <Button text="Home" onAction="#handleHome"/>
+                        <Button text="Productivity" onAction="#handleProductivity"/>
+                        <Button text="Profile" onAction="#handleProfile"/>
                     </children>
                 </HBox>
             </children>
