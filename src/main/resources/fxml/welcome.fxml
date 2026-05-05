@@ -22,7 +22,7 @@
             <Image url = "@/UIPictures/homescreen.png"/>
         </image>
     </ImageView>
-    <Label text="Chiikawa Task Pals"
+    <Label text="Chikawa Task Pals"
       style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS';"/>
 
 
