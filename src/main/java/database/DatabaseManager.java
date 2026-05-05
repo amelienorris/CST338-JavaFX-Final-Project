@@ -226,6 +226,37 @@ public class DatabaseManager {
       System.err.println("could not mark completed " + e.getMessage());
     }
   }
+  public void markTasksDone(int userId, String title, String description, String due, String priority, String repeat) {
+    String sql = """
+            UPDATE tasks
+            SET is_completed = 1
+            WHERE task_id = (
+              SELECT task_id
+              FROM tasks
+              WHERE user_id = ?
+              AND title = ?
+              AND description = ?
+              AND due_date = ?
+              AND priority = ?
+              AND repeat_frequency = ?
+              AND is_completed = 0
+              ORDER BY task_id DESC
+              LIMIT 1
+            )
+            """;
+
+    try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setInt(1, userId);
+      pstmt.setString(2, title);
+      pstmt.setString(3, description);
+      pstmt.setString(4, due);
+      pstmt.setString(5, priority);
+      pstmt.setString(6, repeat);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+        System.err.println("could not mark completed" + e.getMessage());
+    }
+  }
   public void deleteTask(int taskId){
     String sql = "DELETE FROM tasks WHERE task_id = ?";
     try(PreparedStatement pstmt = connection.prepareStatement(sql)){
