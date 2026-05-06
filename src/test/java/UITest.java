@@ -94,12 +94,14 @@ public class UITest extends ApplicationTest {
     void profileChangesAvatarAndBackground() {
         addUser("profileUser", "1234");
         login("profileUser", "1234");
-
+        waitUI();
         clickOn("Profile");
         waitUI();
 
         selectBox("#pfpBox", "chikawa.png");
         selectBox("#colorBox", "Blue");
+        clickOn("Back");
+        waitUI();
 
         assertEquals("chikawa.png", User.getCurrentUser().getAvatar());
         assertEquals("blue", User.getCurrentUser().getTheme());
@@ -158,7 +160,7 @@ public class UITest extends ApplicationTest {
 
     private void waitUI() {
         WaitForAsyncUtils.waitForFxEvents();
-        sleep(1100);
+        sleep(1200);
         WaitForAsyncUtils.waitForFxEvents();
     }
 }
