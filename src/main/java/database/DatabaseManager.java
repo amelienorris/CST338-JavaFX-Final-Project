@@ -34,6 +34,7 @@ public class DatabaseManager {
 
   }
  // tables
+
   private void createTables(){
     try(Statement stmt = connection.createStatement()){
       String users =
