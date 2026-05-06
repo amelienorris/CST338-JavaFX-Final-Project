@@ -108,6 +108,28 @@ public class UITest extends ApplicationTest {
         assertTrue(stage.getScene().getRoot().getStyle().contains("#A8C8F4"));
     }
 
+    @Test
+    void taskAddTask(){
+        addUser("taskUser", "1234");
+        login("taskUser", "1234");
+        waitUI();
+        clickOn("Productivity");
+        waitUI();
+
+        typeIntoField("task", "#titleField");
+        typeIntoField("TestFX test", "#descriptionArea");
+        selectBox("#priorityBox", "HIGH");
+        selectBox("#repeatBox", "None");
+        waitUI();
+        clickOn("Add Task"); // TODO: breaks
+        waitUI();
+
+        ListView<?> tasks = lookup("#taskListView").queryListView();
+        assertListViewContains(tasks, "task");
+        clickOn("Back");
+        waitUI();
+
+    }
 
 
     private User addUser(String username, String password) {
@@ -160,7 +182,7 @@ public class UITest extends ApplicationTest {
 
     private void waitUI() {
         WaitForAsyncUtils.waitForFxEvents();
-        sleep(1200);
+        sleep(1400);
         WaitForAsyncUtils.waitForFxEvents();
     }
 }
